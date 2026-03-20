@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BookaHospi — Growth Dashboard 2026–2027</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+:root {
+  --mg:#CC00CC; --mg2:rgba(204,0,204,0.12); --mg3:rgba(204,0,204,0.06);
+  --purple:#6B2FBE; --teal:#00A896; --amber:#E8950A;
+  --green:#2A9E5A; --red:#D43B3B; --blue:#0077B5;
+  --gray-100:#F7F5F2; --gray-200:#EDEAE5; --gray-300:#D5D1C9;
+  --gray-400:#ABA89F; --gray-600:#6A6760; --gray-800:#2A2927;
+  --bg:#F3F1ED; --card:#FFFFFF; --text:#1A1917; --muted:#6A6760; --border:#E0DDD6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+
+/* HEADER */
+.header{background:var(--gray-800);padding:24px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--mg)}
+.hlogo{width:38px;height:38px;background:var(--mg);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;color:#fff;letter-spacing:-.5px;flex-shrink:0}
+.htitle{color:#fff;font-size:17px;font-weight:500;letter-spacing:-.3px}
+.hsub{color:var(--gray-400);font-size:11px;margin-top:2px;font-family:'DM Mono',monospace}
+.hbadge{background:rgba(204,0,204,.15);border:1px solid rgba(204,0,204,.4);color:#F0A0F0;padding:5px 14px;border-radius:20px;font-size:11px;font-family:'DM Mono',monospace;white-space:nowrap}
+
+/* TABS */
+.tab-bar{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 40px;gap:0}
+.tab-btn{padding:14px 22px;font-size:13px;font-weight:500;color:var(--muted);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;transition:all .15s;font-family:'DM Sans',sans-serif}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--mg);border-bottom-color:var(--mg)}
+
+/* PAGE */
+.page{max-width:1200px;margin:0 auto;padding:28px 40px 60px}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* SCENARIO BAR */
+.scenario-bar{display:flex;align-items:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.scenario-label{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.8px;margin-right:4px}
+.scenario-btn{padding:7px 18px;border-radius:20px;border:1.5px solid var(--border);background:#fff;color:var(--muted);font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all .15s}
+.scenario-btn:hover{border-color:var(--mg);color:var(--mg)}
+.scenario-btn.active{background:var(--mg);border-color:var(--mg);color:#fff}
+.scenario-desc{margin-left:auto;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;background:var(--gray-100);padding:5px 12px;border-radius:6px}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px;position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--mg))}
+.kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:500;margin-bottom:8px}
+.kpi-value{font-size:26px;font-weight:600;color:var(--text);letter-spacing:-.5px;line-height:1;margin-bottom:6px}
+.kpi-delta{font-size:11px;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px}
+.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--muted)}
+
+/* CHART CARD */
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:18px}
+.chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
+.chart-title{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+.chart-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.chart-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted)}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.section-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:500;margin-bottom:14px;margin-top:4px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+/* SLIDER ROW */
+.slider-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--border);margin-top:14px}
+.slider-row label{font-size:11px;color:var(--muted);white-space:nowrap;font-weight:500}
+.slider-row input[type=range]{flex:1;accent-color:var(--mg)}
+.slider-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;min-width:90px;text-align:right;color:var(--mg)}
+
+/* STAT TABLE */
+.market-table{width:100%;border-collapse:collapse;font-size:12px}
+.market-table th{text-align:left;padding:7px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);background:var(--gray-100)}
+.market-table th:not(:first-child){text-align:right}
+.market-table td{padding:9px 10px;border-bottom:1px solid var(--border)}
+.market-table td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+.market-table tr:last-child td{border-bottom:none}
+.market-table tr:hover td{background:var(--gray-100)}
+.badge{display:inline-block;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:500}
+.badge-green{background:#EAF7EE;color:#1A7038}
+.badge-amber{background:#FEF3D9;color:#996400}
+.badge-red{background:#FEEDED;color:#A32020}
+
+/* AUDIENCE */
+.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.audience-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px}
+.audience-card-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:12px}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--gray-200);font-size:12px}
+.stat-row:last-child{border-bottom:none}
+.stat-row-label{color:var(--muted)}
+.stat-row-value{font-family:'DM Mono',monospace;font-weight:500}
+.bar-mini{height:3px;border-radius:2px;background:var(--mg);margin-top:3px;opacity:.55}
+
+/* HISTORICAL INSIGHT CARD */
+.insight-card{background:var(--mg3);border:1px solid rgba(204,0,204,.2);border-radius:12px;padding:16px 20px;margin-bottom:18px;display:flex;gap:20px;flex-wrap:wrap}
+.insight-item{flex:1;min-width:140px}
+.insight-label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--mg);font-weight:500;margin-bottom:4px}
+.insight-val{font-size:20px;font-weight:600;color:var(--text);letter-spacing:-.3px}
+.insight-sub{font-size:11px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
+
+/* GROWTH CHART ANNOTATIONS */
+.annotation-box{background:var(--gray-100);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:inline-flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-top:10px}
+
+.footer{text-align:center;padding:18px;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:20px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="hlogo">BH</div>
+    <div>
+      <div class="htitle">BookaHospi — Growth Dashboard</div>
+      <div class="hsub">Datos reales · Mar 2026 → Mar 2027 projection</div>
+    </div>
+  </div>
+  <div class="hbadge">55,533 usuarios · actualizado 20 Mar 2026</div>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('plataforma',this)">Plataforma</button>
+  <button class="tab-btn" onclick="switchTab('social',this)">Redes Sociales</button>
+  <button class="tab-btn" onclick="switchTab('campanas',this)">Campañas</button>
+</div>
+
+<div class="page">
+
+<!-- ══════════════════════════════════════════════════════
+     TAB 1: PLATAFORMA
+══════════════════════════════════════════════════════ -->
+<div id="tab-plataforma" class="tab-content active">
+
+  <div class="section-title">Histórico real · Ago 2024 — Mar 2026</div>
+
+  <!-- INSIGHT STRIP -->
+  <div class="insight-card">
+    <div class="insight-item">
+      <div class="insight-label">Usuarios totales hoy</div>
+      <div class="insight-val">55,533</div>
+      <div class="insight-sub">acumulado hasta 20 Mar 2026</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-label">Pico mensual</div>
+      <div class="insight-val">8,235</div>
+      <div class="insight-sub">Enero 2026</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-label">Promedio últimos 3 meses</div>
+      <div class="insight-val">7,155</div>
+      <div class="insight-sub">Dic 25 · Ene 26 · Feb 26</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-label">Mar 2026 (parcial 20d)</div>
+      <div class="insight-val">3,383</div>
+      <div class="insight-sub">proyecta ~5,075 mes completo</div>
+    </div>
+    <div class="insight-item">
+      <div class="insight-label">Inflexión ads</div>
+      <div class="insight-val">Jul 2025</div>
+      <div class="insight-sub">de ~200/mes a +3,800/mes</div>
+    </div>
+  </div>
+
+  <!-- HISTORICAL CHART -->
+  <div class="chart-card">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">Crecimiento histórico de usuarios</div>
+        <div class="chart-sub">Nuevos registros/mes + acumulado · datos reales desde Aug 2024</div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mg)"></div>Nuevos/mes</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(204,0,204,.3)"></div>Acumulado</div>
+      </div>
+    </div>
+    <div style="position:relative;width:100%;height:300px">
+      <canvas id="historicalChart"></canvas>
+    </div>
+    <div class="annotation-box">
+      <span style="font-size:16px">📈</span>
+      <span><strong>Inflexión Jul 2025</strong> — Arranque de Meta Ads a escala. De 138 registros (May) a 3,816 (Jul). Desde entonces mantiene &gt;3,400/mes.</span>
+    </div>
+  </div>
+
+  <!-- PROJECTION SECTION -->
+  <div class="section-title" style="margin-top:20px">Proyección 12 meses · Abr 2026 — Mar 2027</div>
+
+  <div class="scenario-bar">
+    <span class="scenario-label">Escenario</span>
+    <button class="scenario-btn" onclick="setPlatScenario('conservative',this)">Conservador</button>
+    <button class="scenario-btn active" id="plat-base-btn" onclick="setPlatScenario('base',this)">Base</button>
+    <button class="scenario-btn" onclick="setPlatScenario('optimistic',this)">Optimista</button>
+    <div class="scenario-desc" id="plat-scenario-desc">Mantener ritmo actual ~5,000/mes</div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card" style="--accent:var(--mg)">
+      <div class="kpi-label">Nuevos registros proyectados</div>
+      <div class="kpi-value" id="plat-total-new">62,400</div>
+      <div class="kpi-delta up" id="plat-total-new-sub">↑ en 12 meses</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--teal)">
+      <div class="kpi-label">Usuarios totales Mar 2027</div>
+      <div class="kpi-value" id="plat-total-mar27">117,933</div>
+      <div class="kpi-delta up" id="plat-total-sub">↑ +112% vs hoy</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--purple)">
+      <div class="kpi-label">Inversión ads proyectada</div>
+      <div class="kpi-value" id="plat-total-spend">€28,800</div>
+      <div class="kpi-delta neutral" id="plat-spend-sub">→ €2,400/mes base</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--amber)">
+      <div class="kpi-label">CPR promedio real</div>
+      <div class="kpi-value">€0.47</div>
+      <div class="kpi-delta up">↑ top 10% sector salud</div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">Proyección acumulada de usuarios — plataforma</div>
+        <div class="chart-sub">Histórico real (gris) + proyección 12 meses (magenta)</div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#ABA89F"></div>Histórico real</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mg)"></div>Proyección</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(204,0,204,.2)"></div>Rango escenarios</div>
+      </div>
+    </div>
+    <div style="position:relative;width:100%;height:320px">
+      <canvas id="forecastChart"></canvas>
+    </div>
+    <div class="slider-row">
+      <label>Nuevos registros/mes (proyectado)</label>
+      <input type="range" id="platMonthlySlider" min="2000" max="12000" step="100" value="5200" oninput="updatePlatSlider()">
+      <span class="slider-val" id="platMonthlyVal">5,200/mes</span>
+    </div>
+    <div class="slider-row">
+      <label>Presupuesto mensual ads (€)</label>
+      <input type="range" id="platSpendSlider" min="1000" max="8000" step="100" value="2400" oninput="updatePlatSlider()">
+      <span class="slider-val" id="platSpendVal">€2,400/mes</span>
+    </div>
+  </div>
+
+</div><!-- /tab-plataforma -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     TAB 2: REDES SOCIALES
+══════════════════════════════════════════════════════ -->
+<div id="tab-social" class="tab-content">
+
+  <div class="section-title">Estado actual · Mar 2026</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card" style="--accent:var(--mg)">
+      <div class="kpi-label">IG España/LATAM</div>
+      <div class="kpi-value">13,566</div>
+      <div class="kpi-delta up">↑ +1,458 este mes (+11.5%)</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--purple)">
+      <div class="kpi-label">IG Global</div>
+      <div class="kpi-value">12,352</div>
+      <div class="kpi-delta up">↑ +117 este mes (+0.9%)</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--blue)">
+      <div class="kpi-label">LinkedIn</div>
+      <div class="kpi-value">3,306</div>
+      <div class="kpi-delta up">↑ +90 este mes (−18.9% vs ant.)</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--teal)">
+      <div class="kpi-label">TikTok</div>
+      <div class="kpi-value">492</div>
+      <div class="kpi-delta neutral">→ canal en desarrollo</div>
+    </div>
+  </div>
+
+  <div class="scenario-bar">
+    <span class="scenario-label">Escenario</span>
+    <button class="scenario-btn" onclick="setSocScenario('conservative',this)">Conservador</button>
+    <button class="scenario-btn active" onclick="setSocScenario('base',this)">Base</button>
+    <button class="scenario-btn" onclick="setSocScenario('optimistic',this)">Optimista</button>
+    <div class="scenario-desc" id="soc-scenario-desc">Mantener ritmo actual de contenido y ads</div>
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">Proyección de seguidores — 12 meses</div>
+        <div class="chart-sub">Abr 2026 → Mar 2027 · todas las redes</div>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--mg)"></div>IG España/LATAM</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>IG Global</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>LinkedIn</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>TikTok</div>
+      </div>
+    </div>
+    <div style="position:relative;width:100%;height:300px">
+      <canvas id="followersChart"></canvas>
+    </div>
+    <div class="slider-row">
+      <label>Crecimiento mensual IG España/LATAM</label>
+      <input type="range" id="igEsSlider" min="500" max="3500" step="100" value="1300" oninput="updateSocialSlider()">
+      <span class="slider-val" id="igEsVal">+1,300/mes</span>
+    </div>
+  </div>
+
+  <!-- PROJECTION CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card" style="--accent:var(--mg)">
+      <div class="kpi-label">IG ES/LATAM — Mar 2027</div>
+      <div class="kpi-value" id="proj-iges">29,166</div>
+      <div class="kpi-delta up" id="proj-iges-delta">↑ +15,600</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--purple)">
+      <div class="kpi-label">IG Global — Mar 2027</div>
+      <div class="kpi-value" id="proj-igglobal">13,792</div>
+      <div class="kpi-delta up" id="proj-igglobal-delta">↑ +1,440</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--blue)">
+      <div class="kpi-label">LinkedIn — Mar 2027</div>
+      <div class="kpi-value" id="proj-li">4,506</div>
+      <div class="kpi-delta up" id="proj-li-delta">↑ +1,200</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--teal)">
+      <div class="kpi-label">TikTok — Mar 2027</div>
+      <div class="kpi-value" id="proj-tt">1,452</div>
+      <div class="kpi-delta up" id="proj-tt-delta">↑ +960</div>
+    </div>
+  </div>
+
+  <!-- AUDIENCE DATA -->
+  <div class="section-title" style="margin-top:8px">Audiencia real — datos actuales</div>
+  <div class="audience-grid">
+    <div class="audience-card">
+      <div class="audience-card-title">IG España/LATAM — Top países</div>
+      <div class="stat-row"><span class="stat-row-label">Argentina</span><span class="stat-row-value">22.5%</span></div>
+      <div class="bar-mini" style="width:100%"></div>
+      <div class="stat-row"><span class="stat-row-label">España</span><span class="stat-row-value">11.2%</span></div>
+      <div class="bar-mini" style="width:50%"></div>
+      <div class="stat-row"><span class="stat-row-label">Venezuela</span><span class="stat-row-value">9.3%</span></div>
+      <div class="bar-mini" style="width:41%"></div>
+      <div class="stat-row"><span class="stat-row-label">Rep. Dominicana</span><span class="stat-row-value">9.1%</span></div>
+      <div class="bar-mini" style="width:40%"></div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-card-title">IG Global — Top ciudades</div>
+      <div class="stat-row"><span class="stat-row-label">Lahore, Pakistan</span><span class="stat-row-value">7.3%</span></div>
+      <div class="bar-mini" style="width:100%"></div>
+      <div class="stat-row"><span class="stat-row-label">Karachi, Pakistan</span><span class="stat-row-value">4.4%</span></div>
+      <div class="bar-mini" style="width:60%"></div>
+      <div class="stat-row"><span class="stat-row-label">Riyadh, KSA</span><span class="stat-row-value">3.6%</span></div>
+      <div class="bar-mini" style="width:49%"></div>
+      <div class="stat-row"><span class="stat-row-label">Cairo, Egipto</span><span class="stat-row-value">3.1%</span></div>
+      <div class="bar-mini" style="width:42%"></div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-card-title">LinkedIn — Top ubicaciones</div>
+      <div class="stat-row"><span class="stat-row-label">Madrid, España</span><span class="stat-row-value">16.6%</span></div>
+      <div class="bar-mini" style="width:100%;background:var(--blue)"></div>
+      <div class="stat-row"><span class="stat-row-label">Delhi, India</span><span class="stat-row-value">6.2%</span></div>
+      <div class="bar-mini" style="width:37%;background:var(--blue)"></div>
+      <div class="stat-row"><span class="stat-row-label">Barcelona, España</span><span class="stat-row-value">4.5%</span></div>
+      <div class="bar-mini" style="width:27%;background:var(--blue)"></div>
+      <div class="stat-row"><span class="stat-row-label">Bogotá, Colombia</span><span class="stat-row-value">4.1%</span></div>
+      <div class="bar-mini" style="width:25%;background:var(--blue)"></div>
+    </div>
+  </div>
+
+  <div class="audience-grid">
+    <div class="audience-card">
+      <div class="audience-card-title">Género IG (ambas cuentas)</div>
+      <div class="stat-row"><span class="stat-row-label">Mujeres</span><span class="stat-row-value">~68%</span></div>
+      <div class="bar-mini" style="width:100%;background:var(--purple)"></div>
+      <div class="stat-row"><span class="stat-row-label">Hombres</span><span class="stat-row-value">~32%</span></div>
+      <div class="bar-mini" style="width:47%;background:var(--purple)"></div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-card-title">Edad principal IG Global</div>
+      <div class="stat-row"><span class="stat-row-label">35–44</span><span class="stat-row-value">40.2%</span></div>
+      <div class="bar-mini" style="width:100%;background:var(--teal)"></div>
+      <div class="stat-row"><span class="stat-row-label">25–34</span><span class="stat-row-value">32.4%</span></div>
+      <div class="bar-mini" style="width:81%;background:var(--teal)"></div>
+      <div class="stat-row"><span class="stat-row-label">45–54</span><span class="stat-row-value">16.8%</span></div>
+      <div class="bar-mini" style="width:42%;background:var(--teal)"></div>
+    </div>
+    <div class="audience-card">
+      <div class="audience-card-title">Interacciones IG Global</div>
+      <div class="stat-row"><span class="stat-row-label">Posts</span><span class="stat-row-value">61.5%</span></div>
+      <div class="bar-mini" style="width:100%;background:var(--amber)"></div>
+      <div class="stat-row"><span class="stat-row-label">Reels</span><span class="stat-row-value">37.5%</span></div>
+      <div class="bar-mini" style="width:61%;background:var(--amber)"></div>
+      <div class="stat-row"><span class="stat-row-label">Stories</span><span class="stat-row-value">1.0%</span></div>
+      <div class="bar-mini" style="width:2%;background:var(--amber)"></div>
+    </div>
+  </div>
+
+</div><!-- /tab-social -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     TAB 3: CAMPAÑAS
+══════════════════════════════════════════════════════ -->
+<div id="tab-campanas" class="tab-content">
+
+  <div class="section-title">Rendimiento real · Feb 17 – Mar 18, 2026</div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card" style="--accent:var(--mg)">
+      <div class="kpi-label">Gasto mensual</div>
+      <div class="kpi-value">€2,424</div>
+      <div class="kpi-delta neutral">→ 13 mercados activos</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--green)">
+      <div class="kpi-label">Total registros</div>
+      <div class="kpi-value">5,110</div>
+      <div class="kpi-delta up">↑ 30 días de campaña</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--teal)">
+      <div class="kpi-label">CPR promedio</div>
+      <div class="kpi-value">€0.47</div>
+      <div class="kpi-delta up">↑ top 10% sector salud global</div>
+    </div>
+    <div class="kpi-card" style="--accent:var(--purple)">
+      <div class="kpi-label">Alcance total</div>
+      <div class="kpi-value">1.07M</div>
+      <div class="kpi-delta neutral">→ 2.06M impresiones</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">Registros por mercado</div>
+          <div class="chart-sub">Total: 5,110 · 30 días</div>
+        </div>
+      </div>
+      <div style="position:relative;width:100%;height:310px">
+        <canvas id="marketsChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card" style="margin-bottom:0">
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">CPR por mercado (€)</div>
+          <div class="chart-sub">Verde &lt;€0.50 · Ámbar &lt;€1.50 · Rojo ≥€1.50</div>
+        </div>
+      </div>
+      <div style="position:relative;width:100%;height:310px">
+        <canvas id="cprChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-top:18px">
+    <div class="chart-title" style="margin-bottom:14px">Detalle por mercado · datos reales</div>
+    <table class="market-table">
+      <thead>
+        <tr>
+          <th>Mercado</th>
+          <th>Inversión</th>
+          <th>Registros</th>
+          <th>CPR</th>
+          <th>Rating</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>LATAM Médicos</strong></td><td>€430</td><td>1,806</td><td>€0.24</td><td><span class="badge badge-green">Excelente</span></td><td style="color:var(--green);font-size:11px">↑ Escalar</td></tr>
+        <tr><td><strong>Pakistan</strong></td><td>€89</td><td>521</td><td>€0.17</td><td><span class="badge badge-green">Excelente</span></td><td style="color:var(--green);font-size:11px">↑ Escalar</td></tr>
+        <tr><td><strong>LATAM Especialistas</strong></td><td>€262</td><td>758</td><td>€0.35</td><td><span class="badge badge-green">Excelente</span></td><td style="color:var(--green);font-size:11px">↑ Escalar</td></tr>
+        <tr><td><strong>LATAM/KSA Hospitales</strong></td><td>€163</td><td>530</td><td>€0.31</td><td><span class="badge badge-green">Excelente</span></td><td style="color:var(--green);font-size:11px">↑ Escalar</td></tr>
+        <tr><td>LATAM Psicólogos</td><td>€98</td><td>338</td><td>€0.29</td><td><span class="badge badge-green">Excelente</span></td><td style="color:var(--green);font-size:11px">↑ Escalar</td></tr>
+        <tr><td>México</td><td>€103</td><td>231</td><td>€0.45</td><td><span class="badge badge-green">Bueno</span></td><td style="color:var(--muted);font-size:11px">→ Mantener</td></tr>
+        <tr><td>Brasil</td><td>€137</td><td>250</td><td>€0.55</td><td><span class="badge badge-green">Bueno</span></td><td style="color:var(--muted);font-size:11px">→ Mantener</td></tr>
+        <tr><td>Egipto</td><td>€89</td><td>128</td><td>€0.70</td><td><span class="badge badge-amber">Aceptable</span></td><td style="color:var(--muted);font-size:11px">→ Optimizar</td></tr>
+        <tr><td>LATAM News</td><td>€90</td><td>90</td><td>€0.99</td><td><span class="badge badge-amber">Revisar</span></td><td style="color:var(--amber);font-size:11px">⚠ Optimizar</td></tr>
+        <tr><td>España Nacional</td><td>€149</td><td>105</td><td>€1.42</td><td><span class="badge badge-amber">Mejorar</span></td><td style="color:var(--amber);font-size:11px">⚠ Revisar creative</td></tr>
+        <tr><td>KSA</td><td>€163</td><td>105</td><td>€1.55</td><td><span class="badge badge-amber">Mejorar</span></td><td style="color:var(--amber);font-size:11px">⚠ Revisar</td></tr>
+        <tr><td>España Intl. (UAE)</td><td>€418</td><td>231</td><td>€1.81</td><td><span class="badge badge-red">Revisar</span></td><td style="color:var(--red);font-size:11px">↓ Reducir budget</td></tr>
+        <tr><td>EEUU / Canadá</td><td>€92</td><td>17</td><td>€5.39</td><td><span class="badge badge-red">Ineficiente</span></td><td style="color:var(--red);font-size:11px">✕ Pausar</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /tab-campanas -->
+
+</div><!-- /page -->
+
+<div class="footer">BookaHospi · 6Profiles Consulting S.L. · Dashboard generado 20 Mar 2026 · Meta Ads Manager + Instagram Insights + DB real</div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────
+const HISTORICAL_MONTHS = ['Ago 24','Sep 24','Oct 24','Nov 24','Dic 24','Ene 25','Feb 25','Mar 25','Abr 25','May 25','Jun 25','Jul 25','Ago 25','Sep 25','Oct 25','Nov 25','Dic 25','Ene 26','Feb 26','Mar 26'];
+const HISTORICAL_NEW = [5202,790,942,1057,827,1052,427,227,205,138,891,3816,4007,3729,3419,3956,6195,8235,7035,3383];
+const HISTORICAL_CUM = [];
+let c=0; for(const v of HISTORICAL_NEW){c+=v;HISTORICAL_CUM.push(c);}
+
+const PROJ_MONTHS = ['Abr 26','May 26','Jun 26','Jul 26','Ago 26','Sep 26','Oct 26','Nov 26','Dic 26','Ene 27','Feb 27','Mar 27'];
+const BASE_USERS = 55533;
+
+const PLAT_SCENARIOS = {
+  conservative:{monthly:3500,spend:2000,desc:'Reducción de inversión · ritmo bajo'},
+  base:{monthly:5200,spend:2400,desc:'Mantener ritmo actual ~5,000/mes'},
+  optimistic:{monthly:7500,spend:3200,desc:'Escalar ads +33% · acelerar crecimiento'}
+};
+
+const SOC_SCENARIOS = {
+  conservative:{igEs:800,igGlobal:80,li:60,tt:40,desc:'Reducción de contenido y ads'},
+  base:{igEs:1300,igGlobal:120,li:100,tt:80,desc:'Mantener ritmo actual de contenido y ads'},
+  optimistic:{igEs:2200,igGlobal:200,li:180,tt:200,desc:'Escalar contenido + seguir ads IG'}
+};
+
+const CURRENT_SOC = {igEs:13566,igGlobal:12352,li:3306,tt:492};
+
+// ─── TAB SWITCH ───────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  setTimeout(()=>{
+    if(name==='plataforma') rebuildPlatCharts();
+    if(name==='social') rebuildSocialCharts();
+    if(name==='campanas') rebuildCampaignCharts();
+  },50);
+}
+
+// ─── PLATFORM CHARTS ──────────────────────────────────────────────────────
+let historicalChart, forecastChart;
+
+function getPlatProjection(monthly){
+  const proj=[]; let cum=BASE_USERS;
+  const ranges={low:[],high:[]};
+  for(let i=0;i<12;i++){
+    cum+=monthly; proj.push(cum);
+    let lo=BASE_USERS; let hi=BASE_USERS;
+    for(let j=0;j<=i;j++){lo+=3500;hi+=7500;}
+    ranges.low.push(lo); ranges.high.push(hi);
+  }
+  return {proj,ranges};
+}
+
+function buildHistoricalChart(){
+  const ctx=document.getElementById('historicalChart').getContext('2d');
+  if(historicalChart)historicalChart.destroy();
+  historicalChart=new Chart(ctx,{
+    data:{
+      labels:HISTORICAL_MONTHS,
+      datasets:[
+        {type:'bar',label:'Nuevos/mes',data:HISTORICAL_NEW,backgroundColor:HISTORICAL_NEW.map((v,i)=>i<11?'rgba(107,47,190,0.5)':'rgba(204,0,204,0.75)'),borderRadius:3,yAxisID:'y'},
+        {type:'line',label:'Acumulado',data:HISTORICAL_CUM,borderColor:'rgba(204,0,204,0.9)',backgroundColor:'rgba(204,0,204,0.06)',fill:true,tension:0.4,borderWidth:2,pointRadius:2,yAxisID:'y2'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('es-ES')}`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{family:'DM Mono',size:10},color:'#6A6760',maxRotation:45}},
+        y:{position:'left',grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},color:'#6A6760',callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v},title:{display:true,text:'Nuevos/mes',color:'#ABA89F',font:{size:10}}}  ,
+        y2:{position:'right',grid:{display:false},ticks:{font:{family:'DM Mono',size:10},color:'rgba(204,0,204,0.7)',callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v},title:{display:true,text:'Acumulado',color:'rgba(204,0,204,0.6)',font:{size:10}}}
+      }
+    }
+  });
+}
+
+function buildForecastChart(monthly){
+  const ctx=document.getElementById('forecastChart').getContext('2d');
+  if(forecastChart)forecastChart.destroy();
+  const {proj,ranges}=getPlatProjection(monthly);
+  const allLabels=[...HISTORICAL_MONTHS,...PROJ_MONTHS];
+  const histData=[...HISTORICAL_CUM,...Array(12).fill(null)];
+  const projData=[...Array(20).fill(null),BASE_USERS,...proj];
+  projData[19]=BASE_USERS;
+
+  forecastChart=new Chart(ctx,{
+    data:{
+      labels:allLabels,
+      datasets:[
+        {type:'line',label:'Histórico',data:histData,borderColor:'#ABA89F',backgroundColor:'transparent',tension:0.4,borderWidth:2,pointRadius:2,spanGaps:false},
+        {type:'line',label:'Proyección',data:projData,borderColor:'#CC00CC',backgroundColor:'rgba(204,0,204,0.08)',fill:true,tension:0.4,borderWidth:2.5,borderDash:[],pointRadius:2,spanGaps:false}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.parsed.y!=null?`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('es-ES')}`:'',filter:i=>i.parsed.y!=null}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{family:'DM Mono',size:10},color:'#6A6760',maxRotation:45}},
+        y:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},color:'#6A6760',callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v}}
+      }
+    }
+  });
+}
+
+function updatePlatCards(monthly, spend){
+  const total12=monthly*12;
+  const mar27=BASE_USERS+total12;
+  document.getElementById('plat-total-new').textContent=total12.toLocaleString('es-ES');
+  document.getElementById('plat-total-new-sub').textContent=`↑ ${monthly.toLocaleString('es-ES')}/mes durante 12 meses`;
+  document.getElementById('plat-total-mar27').textContent=mar27.toLocaleString('es-ES');
+  const pct=Math.round((mar27/BASE_USERS-1)*100);
+  document.getElementById('plat-total-sub').textContent=`↑ +${pct}% vs hoy`;
+  document.getElementById('plat-total-spend').textContent='€'+((spend||2400)*12).toLocaleString('es-ES');
+  document.getElementById('plat-spend-sub').textContent=`→ €${(spend||2400).toLocaleString('es-ES')}/mes`;
+}
+
+function updatePlatSlider(){
+  const monthly=parseInt(document.getElementById('platMonthlySlider').value);
+  const spend=parseInt(document.getElementById('platSpendSlider').value);
+  document.getElementById('platMonthlyVal').textContent=monthly.toLocaleString('es-ES')+'/mes';
+  document.getElementById('platSpendVal').textContent='€'+spend.toLocaleString('es-ES')+'/mes';
+  buildForecastChart(monthly);
+  updatePlatCards(monthly,spend);
+}
+
+function setPlatScenario(name, btn){
+  document.querySelectorAll('#tab-plataforma .scenario-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const s=PLAT_SCENARIOS[name];
+  document.getElementById('plat-scenario-desc').textContent=s.desc;
+  document.getElementById('platMonthlySlider').value=s.monthly;
+  document.getElementById('platMonthlyVal').textContent=s.monthly.toLocaleString('es-ES')+'/mes';
+  document.getElementById('platSpendSlider').value=s.spend;
+  document.getElementById('platSpendVal').textContent='€'+s.spend.toLocaleString('es-ES')+'/mes';
+  buildForecastChart(s.monthly);
+  updatePlatCards(s.monthly,s.spend);
+}
+
+function rebuildPlatCharts(){
+  buildHistoricalChart();
+  buildForecastChart(5200);
+  updatePlatCards(5200,2400);
+}
+
+// ─── SOCIAL CHARTS ────────────────────────────────────────────────────────
+let followersChart;
+
+function getSocProjection(overrides){
+  const s={...SOC_SCENARIOS['base'],...overrides};
+  const project=(base,growth)=>{
+    const d=[base]; for(let i=0;i<12;i++)d.push(Math.round(d[d.length-1]+growth)); return d.slice(1);
+  };
+  return {
+    igEs:project(CURRENT_SOC.igEs,s.igEs),
+    igGlobal:project(CURRENT_SOC.igGlobal,s.igGlobal),
+    li:project(CURRENT_SOC.li,s.li),
+    tt:project(CURRENT_SOC.tt,s.tt)
+  };
+}
+
+function buildFollowersChart(d){
+  const ctx=document.getElementById('followersChart').getContext('2d');
+  if(followersChart)followersChart.destroy();
+  followersChart=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:PROJ_MONTHS,
+      datasets:[
+        {label:'IG España/LATAM',data:d.igEs,borderColor:'#CC00CC',backgroundColor:'rgba(204,0,204,0.08)',fill:true,tension:0.4,borderWidth:2.5,pointRadius:3},
+        {label:'IG Global',data:d.igGlobal,borderColor:'#6B2FBE',backgroundColor:'rgba(107,47,190,0.05)',fill:true,tension:0.4,borderWidth:2,pointRadius:3},
+        {label:'LinkedIn',data:d.li,borderColor:'#0077B5',fill:false,tension:0.4,borderWidth:2,pointRadius:3},
+        {label:'TikTok',data:d.tt,borderColor:'#00A896',fill:false,tension:0.4,borderWidth:2,borderDash:[5,3],pointRadius:3}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('es-ES')}`}}},
+      scales:{
+        x:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:11},color:'#6A6760'}},
+        y:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:11},color:'#6A6760',callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}}
+      }
+    }
+  });
+}
+
+function updateSocCards(d){
+  document.getElementById('proj-iges').textContent=d.igEs[11].toLocaleString('es-ES');
+  document.getElementById('proj-igglobal').textContent=d.igGlobal[11].toLocaleString('es-ES');
+  document.getElementById('proj-li').textContent=d.li[11].toLocaleString('es-ES');
+  document.getElementById('proj-tt').textContent=d.tt[11].toLocaleString('es-ES');
+  document.getElementById('proj-iges-delta').textContent=`↑ +${(d.igEs[11]-CURRENT_SOC.igEs).toLocaleString('es-ES')} en 12 meses`;
+  document.getElementById('proj-igglobal-delta').textContent=`↑ +${(d.igGlobal[11]-CURRENT_SOC.igGlobal).toLocaleString('es-ES')} en 12 meses`;
+  document.getElementById('proj-li-delta').textContent=`↑ +${(d.li[11]-CURRENT_SOC.li).toLocaleString('es-ES')} en 12 meses`;
+  document.getElementById('proj-tt-delta').textContent=`↑ +${(d.tt[11]-CURRENT_SOC.tt).toLocaleString('es-ES')} en 12 meses`;
+}
+
+function updateSocialSlider(){
+  const igEs=parseInt(document.getElementById('igEsSlider').value);
+  document.getElementById('igEsVal').textContent='+'+igEs.toLocaleString('es-ES')+'/mes';
+  const d=getSocProjection({igEs});
+  buildFollowersChart(d);
+  updateSocCards(d);
+}
+
+function setSocScenario(name,btn){
+  document.querySelectorAll('#tab-social .scenario-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const s=SOC_SCENARIOS[name];
+  document.getElementById('soc-scenario-desc').textContent=s.desc;
+  document.getElementById('igEsSlider').value=s.igEs;
+  document.getElementById('igEsVal').textContent='+'+s.igEs.toLocaleString('es-ES')+'/mes';
+  const d=getSocProjection(s);
+  buildFollowersChart(d);
+  updateSocCards(d);
+}
+
+function rebuildSocialCharts(){
+  const d=getSocProjection({});
+  buildFollowersChart(d);
+  updateSocCards(d);
+}
+
+// ─── CAMPAIGN CHARTS ──────────────────────────────────────────────────────
+let marketsChart, cprChart;
+
+function buildCampaignCharts(){
+  const markets=['LATAM Médicos','LATAM Especialistas','LATAM/KSA Hosp.','Pakistan','LATAM Psicólogos','Brasil','México','Egipto','España Intl.','LATAM News','España Nac.','KSA','EEUU/CA'];
+  const registros=[1806,758,530,521,338,250,231,128,231,90,105,105,17];
+  const cprs=[0.24,0.35,0.31,0.17,0.29,0.55,0.45,0.70,1.81,0.99,1.42,1.55,5.39];
+  const regColors=registros.map(r=>r>500?'rgba(42,158,90,0.8)':r>200?'rgba(204,0,204,0.7)':r>100?'rgba(232,149,10,0.7)':'rgba(212,59,59,0.65)');
+  const cprColors=cprs.map(c=>c<0.5?'rgba(42,158,90,0.8)':c<1.0?'rgba(232,149,10,0.75)':c<2.0?'rgba(204,0,204,0.65)':'rgba(212,59,59,0.75)');
+
+  const c1=document.getElementById('marketsChart').getContext('2d');
+  if(marketsChart)marketsChart.destroy();
+  marketsChart=new Chart(c1,{type:'bar',data:{labels:markets,datasets:[{data:registros,backgroundColor:regColors,borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},color:'#6A6760'}},y:{grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:'#2A2927'}}}}});
+
+  const c2=document.getElementById('cprChart').getContext('2d');
+  if(cprChart)cprChart.destroy();
+  cprChart=new Chart(c2,{type:'bar',data:{labels:markets,datasets:[{data:cprs,backgroundColor:cprColors,borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`CPR: €${ctx.parsed.x.toFixed(2)}`}}},scales:{x:{grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{family:'DM Mono',size:10},color:'#6A6760',callback:v=>'€'+v.toFixed(2)}},y:{grid:{display:false},ticks:{font:{family:'DM Sans',size:11},color:'#2A2927'}}}}});
+}
+
+function rebuildCampaignCharts(){ buildCampaignCharts(); }
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+window.addEventListener('load',()=>{
+  rebuildPlatCharts();
+});
+</script>
+</body>
+</html>
