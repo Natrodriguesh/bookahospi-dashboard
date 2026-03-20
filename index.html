@@ -94,11 +94,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .bar-mini{height:3px;border-radius:2px;background:var(--mg);margin-top:3px;opacity:.55}
 
 /* HISTORICAL INSIGHT CARD */
-.insight-card{background:var(--mg3);border:1px solid rgba(204,0,204,.2);border-radius:12px;padding:16px 20px;margin-bottom:18px;display:flex;gap:20px;flex-wrap:wrap}
-.insight-item{flex:1;min-width:140px}
-.insight-label{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--mg);font-weight:500;margin-bottom:4px}
-.insight-val{font-size:20px;font-weight:600;color:var(--text);letter-spacing:-.3px}
-.insight-sub{font-size:11px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
+.insight-card{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.insight-item{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 16px;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.insight-item:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.07)}
+.insight-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--icolor,var(--mg))}
+.insight-icon{font-size:22px;margin-bottom:10px;display:block}
+.insight-label{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:500;margin-bottom:6px}
+.insight-val{font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.5px;line-height:1;margin-bottom:6px}
+.insight-sub{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;line-height:1.4}
+.insight-trend{position:absolute;bottom:14px;right:14px;font-size:11px;font-weight:600;font-family:'DM Mono',monospace}
 
 /* GROWTH CHART ANNOTATIONS */
 .annotation-box{background:var(--gray-100);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:inline-flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-top:10px}
@@ -137,30 +141,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 
   <!-- INSIGHT STRIP -->
   <div class="insight-card">
-    <div class="insight-item">
+    <div class="insight-item" style="--icolor:var(--mg)">
+      <span class="insight-icon">👥</span>
       <div class="insight-label">Usuarios totales hoy</div>
       <div class="insight-val">55,533</div>
-      <div class="insight-sub">acumulado hasta 20 Mar 2026</div>
+      <div class="insight-sub">acumulado hasta<br>20 Mar 2026</div>
+      <span class="insight-trend" style="color:var(--mg)">base →</span>
     </div>
-    <div class="insight-item">
+    <div class="insight-item" style="--icolor:var(--green)">
+      <span class="insight-icon">🏆</span>
       <div class="insight-label">Pico mensual</div>
       <div class="insight-val">8,235</div>
-      <div class="insight-sub">Enero 2026</div>
+      <div class="insight-sub">Enero 2026<br>máximo histórico</div>
+      <span class="insight-trend" style="color:var(--green)">↑ récord</span>
     </div>
-    <div class="insight-item">
+    <div class="insight-item" style="--icolor:var(--teal)">
+      <span class="insight-icon">📊</span>
       <div class="insight-label">Promedio últimos 3 meses</div>
       <div class="insight-val">7,155</div>
-      <div class="insight-sub">Dic 25 · Ene 26 · Feb 26</div>
+      <div class="insight-sub">Dic 25 · Ene 26<br>Feb 26</div>
+      <span class="insight-trend" style="color:var(--teal)">/mes</span>
     </div>
-    <div class="insight-item">
-      <div class="insight-label">Mar 2026 (parcial 20d)</div>
+    <div class="insight-item" style="--icolor:var(--amber)">
+      <span class="insight-icon">📅</span>
+      <div class="insight-label">Mar 2026 — parcial</div>
       <div class="insight-val">3,383</div>
-      <div class="insight-sub">proyecta ~5,075 mes completo</div>
+      <div class="insight-sub">solo 20 días<br>proyecta ~5,075</div>
+      <span class="insight-trend" style="color:var(--amber)">20d →</span>
     </div>
-    <div class="insight-item">
+    <div class="insight-item" style="--icolor:var(--purple)">
+      <span class="insight-icon">⚡</span>
       <div class="insight-label">Inflexión ads</div>
       <div class="insight-val">Jul 2025</div>
-      <div class="insight-sub">de ~200/mes a +3,800/mes</div>
+      <div class="insight-sub">de ~200/mes<br>a +3,800/mes</div>
+      <span class="insight-trend" style="color:var(--purple)">↑ 19x</span>
     </div>
   </div>
 
@@ -198,24 +212,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 
   <div class="kpi-grid">
     <div class="kpi-card" style="--accent:var(--mg)">
-      <div class="kpi-label">Nuevos registros proyectados</div>
-      <div class="kpi-value" id="plat-total-new">62,400</div>
-      <div class="kpi-delta up" id="plat-total-new-sub">↑ en 12 meses</div>
+      <div class="kpi-label">Usuarios hoy (20 Mar 2026)</div>
+      <div class="kpi-value">55,533</div>
+      <div class="kpi-delta up">↑ base de partida</div>
     </div>
     <div class="kpi-card" style="--accent:var(--teal)">
       <div class="kpi-label">Usuarios totales Mar 2027</div>
-      <div class="kpi-value" id="plat-total-mar27">117,933</div>
+      <div class="kpi-value" id="plat-total-mar27">117,939</div>
       <div class="kpi-delta up" id="plat-total-sub">↑ +112% vs hoy</div>
     </div>
-    <div class="kpi-card" style="--accent:var(--purple)">
-      <div class="kpi-label">Inversión ads proyectada</div>
-      <div class="kpi-value" id="plat-total-spend">€28,800</div>
-      <div class="kpi-delta neutral" id="plat-spend-sub">→ €2,400/mes base</div>
+    <div class="kpi-card" style="--accent:var(--green)">
+      <div class="kpi-label">Crecimiento neto en 12 meses</div>
+      <div class="kpi-value" id="plat-total-new">+62,406</div>
+      <div class="kpi-delta up" id="plat-total-new-sub">↑ 5,106 nuevos/mes</div>
     </div>
-    <div class="kpi-card" style="--accent:var(--amber)">
-      <div class="kpi-label">CPR promedio real</div>
-      <div class="kpi-value">€0.47</div>
-      <div class="kpi-delta up">↑ top 10% sector salud</div>
+    <div class="kpi-card" style="--accent:var(--purple)">
+      <div class="kpi-label">Inversión total proyectada</div>
+      <div class="kpi-value" id="plat-total-spend">€28,800</div>
+      <div class="kpi-delta neutral" id="plat-spend-sub">→ €2,400/mes · CPR €0.47</div>
     </div>
   </div>
 
@@ -235,14 +249,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
       <canvas id="forecastChart"></canvas>
     </div>
     <div class="slider-row">
-      <label>Nuevos registros/mes (proyectado)</label>
-      <input type="range" id="platMonthlySlider" min="2000" max="12000" step="100" value="5200" oninput="updatePlatSlider()">
-      <span class="slider-val" id="platMonthlyVal">5,200/mes</span>
-    </div>
-    <div class="slider-row">
       <label>Presupuesto mensual ads (€)</label>
       <input type="range" id="platSpendSlider" min="1000" max="8000" step="100" value="2400" oninput="updatePlatSlider()">
       <span class="slider-val" id="platSpendVal">€2,400/mes</span>
+    </div>
+    <div class="slider-row" style="opacity:0.6;pointer-events:none">
+      <label>Registros/mes calculados (CPR €0.47)</label>
+      <input type="range" id="platMonthlySlider" min="2000" max="17000" step="100" value="5106" style="accent-color:var(--teal)">
+      <span class="slider-val" id="platMonthlyVal" style="color:var(--teal)">5,106/mes</span>
     </div>
   </div>
 
@@ -307,6 +321,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
       <label>Crecimiento mensual IG España/LATAM</label>
       <input type="range" id="igEsSlider" min="500" max="3500" step="100" value="1300" oninput="updateSocialSlider()">
       <span class="slider-val" id="igEsVal">+1,300/mes</span>
+    </div>
+    <div class="slider-row">
+      <label style="color:var(--purple)">Crecimiento mensual IG Global (inglés)</label>
+      <input type="range" id="igGlobalSlider" min="100" max="1500" step="50" value="280" oninput="updateSocialSlider()" style="accent-color:var(--purple)">
+      <span class="slider-val" id="igGlobalVal" style="color:var(--purple)">+280/mes</span>
+    </div>
+    <div class="slider-row">
+      <label style="color:var(--blue)">Crecimiento mensual LinkedIn (con ads)</label>
+      <input type="range" id="liSlider" min="50" max="1500" step="50" value="449" oninput="updateSocialSlider()" style="accent-color:var(--blue)">
+      <span class="slider-val" id="liVal" style="color:var(--blue)">+1,116/mes → 10K en 6 meses</span>
     </div>
   </div>
 
@@ -506,15 +530,15 @@ const PROJ_MONTHS = ['Abr 26','May 26','Jun 26','Jul 26','Ago 26','Sep 26','Oct 
 const BASE_USERS = 55533;
 
 const PLAT_SCENARIOS = {
-  conservative:{monthly:3500,spend:2000,desc:'Reducción de inversión · ritmo bajo'},
-  base:{monthly:5200,spend:2400,desc:'Mantener ritmo actual ~5,000/mes'},
-  optimistic:{monthly:7500,spend:3200,desc:'Escalar ads +33% · acelerar crecimiento'}
+  conservative:{monthly:4255,spend:2000,desc:'Reducción de inversión · €2,000/mes ads'},
+  base:{monthly:5106,spend:2400,desc:'Mantener presupuesto actual · €2,400/mes'},
+  optimistic:{monthly:6809,spend:3200,desc:'Escalar ads a €3,200/mes · +33% presupuesto'}
 };
 
 const SOC_SCENARIOS = {
-  conservative:{igEs:800,igGlobal:80,li:60,tt:40,desc:'Reducción de contenido y ads'},
-  base:{igEs:1300,igGlobal:120,li:100,tt:80,desc:'Mantener ritmo actual de contenido y ads'},
-  optimistic:{igEs:2200,igGlobal:200,li:180,tt:200,desc:'Escalar contenido + seguir ads IG'}
+  conservative:{igEs:900,igGlobal:150,li:150,tt:40,desc:'Crecimiento orgánico bajo · sin presupuesto nuevo'},
+  base:{igEs:1300,igGlobal:280,li:449,tt:80,desc:'Objetivo 6K LinkedIn en 6 meses · médicos + hospitales'},
+  optimistic:{igEs:2200,igGlobal:500,li:700,tt:200,desc:'Escalar LinkedIn + IG Global · médicos, enfermeros y hospitales'}
 };
 
 const CURRENT_SOC = {igEs:13566,igGlobal:12352,li:3306,tt:492};
@@ -603,18 +627,26 @@ function buildForecastChart(monthly){
 function updatePlatCards(monthly, spend){
   const total12=monthly*12;
   const mar27=BASE_USERS+total12;
-  document.getElementById('plat-total-new').textContent=total12.toLocaleString('es-ES');
-  document.getElementById('plat-total-new-sub').textContent=`↑ ${monthly.toLocaleString('es-ES')}/mes durante 12 meses`;
-  document.getElementById('plat-total-mar27').textContent=mar27.toLocaleString('es-ES');
   const pct=Math.round((mar27/BASE_USERS-1)*100);
-  document.getElementById('plat-total-sub').textContent=`↑ +${pct}% vs hoy`;
+  const costPerUser=((spend||2400)*12/total12).toFixed(2);
+  
+  // Crecimiento neto
+  document.getElementById('plat-total-new').textContent='+'+total12.toLocaleString('es-ES');
+  document.getElementById('plat-total-new-sub').textContent=`↑ ${monthly.toLocaleString('es-ES')} nuevos/mes · coste €${costPerUser}/usuario`;
+  
+  // Total Mar 2027
+  document.getElementById('plat-total-mar27').textContent=mar27.toLocaleString('es-ES');
+  document.getElementById('plat-total-sub').textContent=`↑ +${pct}% vs hoy (55,533 base)`;
+  
+  // Inversión
   document.getElementById('plat-total-spend').textContent='€'+((spend||2400)*12).toLocaleString('es-ES');
-  document.getElementById('plat-spend-sub').textContent=`→ €${(spend||2400).toLocaleString('es-ES')}/mes`;
+  document.getElementById('plat-spend-sub').textContent=`→ €${(spend||2400).toLocaleString('es-ES')}/mes · CPR €0.47`;
 }
 
 function updatePlatSlider(){
-  const monthly=parseInt(document.getElementById('platMonthlySlider').value);
   const spend=parseInt(document.getElementById('platSpendSlider').value);
+  const monthly=Math.round(spend/0.47);
+  document.getElementById('platMonthlySlider').value=monthly;
   document.getElementById('platMonthlyVal').textContent=monthly.toLocaleString('es-ES')+'/mes';
   document.getElementById('platSpendVal').textContent='€'+spend.toLocaleString('es-ES')+'/mes';
   buildForecastChart(monthly);
@@ -626,18 +658,22 @@ function setPlatScenario(name, btn){
   btn.classList.add('active');
   const s=PLAT_SCENARIOS[name];
   document.getElementById('plat-scenario-desc').textContent=s.desc;
-  document.getElementById('platMonthlySlider').value=s.monthly;
-  document.getElementById('platMonthlyVal').textContent=s.monthly.toLocaleString('es-ES')+'/mes';
   document.getElementById('platSpendSlider').value=s.spend;
   document.getElementById('platSpendVal').textContent='€'+s.spend.toLocaleString('es-ES')+'/mes';
-  buildForecastChart(s.monthly);
-  updatePlatCards(s.monthly,s.spend);
+  const monthly=Math.round(s.spend/0.47);
+  document.getElementById('platMonthlySlider').value=monthly;
+  document.getElementById('platMonthlyVal').textContent=monthly.toLocaleString('es-ES')+'/mes';
+  buildForecastChart(monthly);
+  updatePlatCards(monthly,s.spend);
 }
 
 function rebuildPlatCharts(){
   buildHistoricalChart();
-  buildForecastChart(5200);
-  updatePlatCards(5200,2400);
+  const initMonthly=Math.round(2400/0.47);
+  document.getElementById('platMonthlySlider').value=initMonthly;
+  document.getElementById('platMonthlyVal').textContent=initMonthly.toLocaleString('es-ES')+'/mes';
+  buildForecastChart(initMonthly);
+  updatePlatCards(initMonthly,2400);
 }
 
 // ─── SOCIAL CHARTS ────────────────────────────────────────────────────────
@@ -695,8 +731,15 @@ function updateSocCards(d){
 
 function updateSocialSlider(){
   const igEs=parseInt(document.getElementById('igEsSlider').value);
+  const igGlobal=parseInt(document.getElementById('igGlobalSlider').value);
+  const li=parseInt(document.getElementById('liSlider').value);
   document.getElementById('igEsVal').textContent='+'+igEs.toLocaleString('es-ES')+'/mes';
-  const d=getSocProjection({igEs});
+  document.getElementById('igGlobalVal').textContent='+'+igGlobal.toLocaleString('es-ES')+'/mes';
+  // Show milestone info on LinkedIn slider
+  const liTarget=3306+(li*6);
+  const liLabel = li>=1000 ? `+${li.toLocaleString('es-ES')}/mes → ${liTarget.toLocaleString('es-ES')} en 6 meses` : `+${li.toLocaleString('es-ES')}/mes`;
+  document.getElementById('liVal').textContent=liLabel;
+  const d=getSocProjection({igEs,igGlobal,li});
   buildFollowersChart(d);
   updateSocCards(d);
 }
@@ -708,12 +751,21 @@ function setSocScenario(name,btn){
   document.getElementById('soc-scenario-desc').textContent=s.desc;
   document.getElementById('igEsSlider').value=s.igEs;
   document.getElementById('igEsVal').textContent='+'+s.igEs.toLocaleString('es-ES')+'/mes';
+  document.getElementById('igGlobalSlider').value=s.igGlobal;
+  document.getElementById('igGlobalVal').textContent='+'+s.igGlobal.toLocaleString('es-ES')+'/mes';
+  document.getElementById('liSlider').value=s.li;
+  const liTarget=3306+(s.li*6);
+  document.getElementById('liVal').textContent=s.li>=1000?`+${s.li.toLocaleString('es-ES')}/mes → ${liTarget.toLocaleString('es-ES')} en 6 meses`:`+${s.li.toLocaleString('es-ES')}/mes`;
   const d=getSocProjection(s);
   buildFollowersChart(d);
   updateSocCards(d);
 }
 
 function rebuildSocialCharts(){
+  document.getElementById('igGlobalSlider').value=280;
+  document.getElementById('igGlobalVal').textContent='+280/mes';
+  document.getElementById('liSlider').value=1116;
+  document.getElementById('liVal').textContent='+449/mes → 6K en 6 meses';
   const d=getSocProjection({});
   buildFollowersChart(d);
   updateSocCards(d);
