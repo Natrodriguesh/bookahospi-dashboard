@@ -4,11 +4,28 @@ Reference system for the standalone landing page. Cream editorial canvas, single
 indigo action colour, warm-gray ink, and a layered depth treatment reserved for
 marketing sections.
 
-> **Provenance:** mercury.com could not be fetched from this environment (the
-> egress policy returns 403 for all non-allowlisted hosts). The token values
-> below come from published third-party documentation of Mercury's system, not
-> from the live stylesheet. They must be reconciled against the screenshots
-> before the visual work is considered final. See `PROVENANCE.md`.
+> **Provenance:** mercury.com still cannot be fetched from this environment (the
+> egress policy returns 403 for all non-allowlisted hosts), so no value here was
+> read off Mercury's stylesheet. The palette and geometry below are read off
+> reference screenshots of the homepage; the rest comes from published
+> third-party documentation. See `PROVENANCE.md`, and
+> `reference/extract-mercury.sh` for the extraction to run once the host is
+> reachable.
+
+## 0. Three surfaces, not one
+
+The homepage alternates between three canvases, and the pacing depends on the
+alternation:
+
+| Surface | Background | Used for |
+| --- | --- | --- |
+| **A — warm cream** `#f5f4f1` | tinted plates `#eceae4` | hero, feature cards, regulators, closing |
+| **B — cool near-white** `#f7f9fa` | pale-blue plates `#d4e3ec`, dark plates | the outcome/benefit grid |
+| **C — dark** `#12121c` | slate-violet plates `#2b2b39` | hard numbers, security |
+
+Never run two dark sections back to back. Surface C is a punctuation mark — it
+appears where the claim is quantitative or about trust, and a light section
+separates each use.
 
 ## 1. Atmosphere
 
@@ -64,12 +81,18 @@ warm-gray weight, or the semantic trio at status-sized scale.
 ## 3. Typography
 
 Mercury sets everything in **Arcadia** and **Arcadia Display**, which are
-proprietary and not licensable. Substitute stack:
+proprietary and not licensable.
 
-- **Headlines** — `Arcadia Display` → `Tiempos Headline`, `Iowan Old Style`,
-  `Georgia`, serif. Weight 400. Letter-spacing −1%.
-- **Body + UI** — `Arcadia` → `Inter`, `system-ui`. Weight 400/500.
-  Line-height 1.5.
+Headlines are a **grotesque sans**, not a serif — tight tracking, near-black
+ink, set large and left-aligned with a hard full stop. Earlier notes here
+described a serif display face; the screenshots show that is wrong.
+
+Substitute stack (Inter, self-hosted at `assets/fonts/`):
+
+- **Headlines** — Inter at weight **560**, letter-spacing **−0.022em**,
+  line-height **1.06**. Two lines maximum, broken manually with `<br>` where the
+  break carries meaning.
+- **Body + UI** — Inter 400/520/540. Line-height 1.55.
 - **Numerals** — tabular figures on every stat, percentage, and count.
   `font-variant-numeric: tabular-nums`. Never proportional figures on a number
   that a reader will compare against another number.
@@ -158,6 +181,32 @@ Construction notes for that pattern:
 Depth here is *soft and wide* — large blur radii at very low opacity, tinted
 with the ink colour rather than pure black. A tight dark shadow will
 immediately read as generic SaaS instead of Mercury.
+
+## 6b. The abstract graphics
+
+Mercury pairs the screenshot showcases with rendered abstract forms: soft
+overlapping ellipses, concentric shells around a lock, glowing bar pairs,
+soft-body toggles. All of them are reproducible in CSS. What makes them read as
+renders rather than as CSS:
+
+- **Grain.** Every dark graphic carries visible noise. Without it the gradients
+  look flat and synthetic. An `feTurbulence` SVG at `opacity: 0.2` and
+  `mix-blend-mode: overlay` is enough.
+- **A lit rim.** Shells and spheres need a bright top edge
+  (`border: 1px solid rgba(255,255,255,.10)` plus an inset highlight). A radial
+  fill with no rim just glows; it doesn't describe a form.
+- **Blur proportional to size.** A long bar tolerates `blur(5–9px)`; a short one
+  at the same blur stops reading as a bar and becomes a smudge. Scale it down,
+  and give short bars a `min-width`.
+- **Contrast against the plate.** On surface C the plate is `#2b2b39`, so an
+  "off" or "before" element has to sit around `#55556a`–`#6d6d85`. Anything
+  closer to the plate tone vanishes.
+- **Don't over-blur groups.** Two ellipses meant to overlap need to keep their
+  own edges; heavy blur merges them into one blob and the composition is lost.
+
+Layout trap worth knowing: a `.gfx` container set to `place-items: center` stops
+its rows stretching, which collapses any `1fr` bar track to zero width. Reset
+`align-items: stretch` on any graphic that lays out full-width bars.
 
 ## 7. Do / Don't
 

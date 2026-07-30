@@ -69,6 +69,23 @@ Two things, neither of which is Mercury's stylesheet:
   overlap offsets of the showcase graphics are reconstructed from written
   description. These specifically need the screenshots.
 
+## What the screenshots settled
+
+Reference screenshots of the homepage arrived and corrected three things:
+
+1. **Light *and* dark, not one or the other.** The disagreement above was a
+   false choice — the homepage alternates warm cream, cool near-white, and a
+   dark canvas. `DESIGN.md` §0 records the three surfaces and when each is used.
+2. **Headlines are a grotesque sans, not a serif.** The published spec's serif
+   fallback stack was simply wrong about the display face. Corrected in §3.
+3. **The marketing sections do use depth.** Confirmed directly: tinted plates
+   holding blurred product screenshots with crisp glass pills floating over
+   them, lavender glow behind a card mockup, and rendered abstract forms with
+   visible grain. The flat rule belongs to the dashboard only.
+
+Palette and geometry in `tokens.css` are now read off those screenshots rather
+than from prose. They remain observed-by-eye values, not stylesheet values.
+
 ## To resolve
 
 Screenshots of the Mercury homepage — particularly full-width captures of the

@@ -1,0 +1,1507 @@
+/* Booka landing — Mercury-derived visual system.
+ * Tokens live in tokens.css. Rules and rationale live in DESIGN.md.
+ */
+
+/* Self-hosted so the page has no external dependency. Mercury's Arcadia is
+   proprietary; Inter is the closest available grotesque. */
+@font-face {
+  font-family: "Inter var";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("assets/fonts/inter-latin-opsz-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+    U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter var";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("assets/fonts/inter-latin-ext-opsz-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304-0308, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--fs-17);
+  line-height: 1.55;
+  color: var(--a-body);
+  background: var(--a-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+figure {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ══ layout ══════════════════════════════════════════════════ */
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--sp-8);
+}
+
+.wrap--narrow {
+  max-width: 820px;
+  text-align: center;
+}
+
+.s {
+  padding: var(--sp-32) 0;
+}
+
+.s--a {
+  background: var(--a-bg);
+  color: var(--a-body);
+}
+
+.s--b {
+  background: var(--b-bg);
+  color: var(--b-body);
+}
+
+.s--c {
+  background: var(--c-bg);
+  color: var(--c-body);
+}
+
+.s--c-deep {
+  background: var(--c-bg-2);
+}
+
+/* A hairline rule opens each section the way Mercury's do. */
+.s + .s.s--a {
+  padding-top: var(--sp-24);
+}
+
+.s--a + .s--a > .wrap > .display:first-child::before,
+.s--a + .s--a > .wrap > .split .display::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: var(--a-rule);
+  margin-bottom: var(--sp-16);
+}
+
+/* ══ type ════════════════════════════════════════════════════ */
+
+.display {
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: var(--display-leading);
+  color: var(--a-ink);
+  margin: 0 0 var(--sp-6);
+  font-size: clamp(2rem, 4.4vw, 3.05rem);
+  font-variation-settings: "wght" 560;
+}
+
+h1.display {
+  font-size: clamp(2.5rem, 5.6vw, 4.05rem);
+  max-width: 20ch;
+}
+
+.display--lg {
+  font-size: clamp(2.3rem, 5vw, 3.5rem);
+}
+
+.s--b .display {
+  color: var(--b-ink);
+}
+
+.s--c .display {
+  color: var(--c-ink);
+}
+
+.eyebrow {
+  font-size: var(--fs-13);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--a-muted);
+  font-weight: 500;
+  margin: 0 0 var(--sp-6);
+}
+
+.lede {
+  font-size: var(--fs-19);
+  line-height: 1.62;
+  max-width: 62ch;
+  margin: 0 0 var(--sp-8);
+  color: var(--a-body);
+}
+
+.lede--center {
+  margin-inline: auto;
+}
+
+.lede--tight {
+  font-size: var(--fs-17);
+  max-width: 46ch;
+}
+
+.kicker {
+  font-size: var(--fs-22);
+  font-weight: 560;
+  color: var(--a-ink);
+  letter-spacing: -0.012em;
+  margin: 0 0 var(--sp-8);
+}
+
+.dim {
+  color: var(--c-muted);
+}
+
+/* ══ nav ═════════════════════════════════════════════════════ */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(245, 244, 241, 0.82);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--a-rule);
+}
+
+.nav-in {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: var(--sp-4) var(--sp-8);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+
+.brand {
+  font-size: var(--fs-22);
+  font-weight: 640;
+  letter-spacing: -0.03em;
+  color: var(--a-ink);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--sp-6);
+  margin-left: var(--sp-8);
+  font-size: var(--fs-15);
+}
+
+.nav-links a {
+  color: var(--a-body);
+}
+
+.nav-links a:hover {
+  color: var(--a-ink);
+}
+
+.nav-cta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+/* ══ buttons ═════════════════════════════════════════════════ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-chip);
+  padding: 10px 20px;
+  font-size: var(--fs-15);
+  font-weight: 540;
+  line-height: 1;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+  white-space: nowrap;
+}
+
+.btn--lg {
+  padding: 14px 26px;
+  font-size: var(--fs-17);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn--tonal {
+  background: var(--a-panel-2);
+  color: var(--a-ink);
+}
+
+.btn--tonal:hover {
+  background: #dcd8ce;
+}
+
+.btn--ghost {
+  color: var(--a-ink);
+}
+
+.btn--ghost:hover {
+  color: var(--accent);
+}
+
+.cta-row {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.cta-row--center {
+  justify-content: center;
+}
+
+/* ══ hero ════════════════════════════════════════════════════ */
+
+.hero {
+  padding-top: var(--sp-24);
+}
+
+.hero .lede {
+  max-width: 58ch;
+}
+
+.hero-stage {
+  margin-top: var(--sp-16);
+}
+
+/* ══ plates: the tinted plane a graphic sits on ══════════════ */
+
+.plate {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--r-plate);
+  background: var(--a-panel);
+  aspect-ratio: 1.52;
+  display: grid;
+  place-items: center;
+  padding: 9% 9% 0;
+}
+
+.plate--hero {
+  aspect-ratio: 2.16;
+  padding: 5.5% 6% 0;
+  background: linear-gradient(180deg, #efede7, #e9e6df);
+}
+
+.plate--tall {
+  aspect-ratio: 1.46;
+  padding: 9% 8% 0;
+}
+
+.plate--dark {
+  background: linear-gradient(165deg, #2d2d36 0%, #1b1b22 62%, #141419 100%);
+  padding: 0;
+}
+
+.plate--blue {
+  background: var(--b-panel);
+  padding: 8%;
+}
+
+.plate--c {
+  background: var(--c-panel);
+  padding: 0;
+}
+
+/* the radial "light falling on the group" wash */
+.wash {
+  position: absolute;
+  inset: -10% -10% auto;
+  height: 78%;
+  background: radial-gradient(
+    118% 92% at 50% 0%,
+    var(--glow-ice) 0%,
+    rgba(205, 221, 255, 0) 62%
+  );
+  opacity: 0.72;
+  z-index: 0;
+}
+
+.wash--lav {
+  background: radial-gradient(
+    100% 80% at 50% 6%,
+    var(--glow-lavender) 0%,
+    rgba(167, 159, 212, 0) 60%
+  );
+  opacity: 0.5;
+}
+
+/* a screenshot that runs off the bottom of its plate */
+.fade {
+  position: absolute;
+  inset: auto 0 0;
+  height: 26%;
+  background: linear-gradient(rgba(236, 234, 228, 0) 0%, var(--a-panel) 88%);
+  z-index: 3;
+}
+
+.plate--hero .fade {
+  background: linear-gradient(rgba(233, 230, 223, 0) 0%, #e9e6df 88%);
+}
+
+/* ══ product screenshots ═════════════════════════════════════ */
+
+/* Captures carry their own accent colour; blur + desaturation folds
+   them into this palette and keeps them reading as texture, not UI. */
+.shot {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: var(--r-shot);
+  box-shadow: var(--lift-shot);
+  filter: var(--shot-filter);
+  align-self: start;
+}
+
+.shot--soft {
+  filter: var(--shot-filter-soft);
+}
+
+.shot--edge {
+  width: 118%;
+  max-width: none;
+  margin-left: 6%;
+}
+
+/* Re-tints the desaturated capture toward the wash hue. Sits above the
+   screenshot (z-index 1) and below the floating chrome (z-index 4) so chips
+   stay crisp and true-coloured. */
+.plate:has(.shot)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--shot-tint);
+  mix-blend-mode: color;
+  opacity: 0.55;
+}
+
+/* ══ floating chrome over a screenshot ═══════════════════════ */
+
+.chip {
+  position: absolute;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 11px 19px;
+  border-radius: var(--r-chip);
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--lift-chip);
+  font-size: var(--fs-15);
+  font-weight: 520;
+  color: var(--a-ink);
+  white-space: nowrap;
+}
+
+.chip--sm {
+  padding: 9px 15px;
+  font-size: var(--fs-14);
+}
+
+.chip--a {
+  top: 26%;
+  left: 4%;
+}
+.chip--b {
+  top: 15%;
+  right: 5%;
+}
+.chip--c {
+  bottom: 16%;
+  left: 30%;
+}
+.chip--d {
+  top: 30%;
+  left: 3%;
+}
+.chip--e {
+  top: 17%;
+  right: 4%;
+}
+.chip--f {
+  bottom: 24%;
+  right: 14%;
+}
+.chip--g {
+  top: 52%;
+  right: 5%;
+}
+.chip--h {
+  top: 20%;
+  right: 6%;
+}
+
+.spark {
+  width: 17px;
+  height: 17px;
+  fill: var(--glow-lavender-2);
+  flex: none;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.dot--ok {
+  background: var(--ok);
+}
+
+/* ══ feature cards ═══════════════════════════════════════════ */
+
+.grid {
+  display: grid;
+  gap: var(--sp-12) var(--sp-8);
+  margin-top: var(--sp-16);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.feature h3 {
+  margin: var(--sp-6) 0 var(--sp-2);
+  font-size: var(--fs-19);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  color: var(--a-ink);
+}
+
+.feature p {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--a-body);
+}
+
+.feature--b h3 {
+  color: var(--b-ink);
+}
+.feature--b p {
+  color: var(--b-body);
+}
+
+.feature--c h3 {
+  color: var(--c-ink);
+}
+.feature--c p {
+  color: var(--c-body);
+}
+
+/* ══ graphics: shared ════════════════════════════════════════ */
+
+.gfx {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+}
+
+/* Mercury's abstract renders are visibly grained; without it they read
+   as flat CSS gradients. */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+  z-index: 5;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
+}
+
+/* ══ graphic: credential card ════════════════════════════════ */
+
+.gfx--card {
+  align-items: center;
+}
+
+.cardglow {
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  top: 14%;
+  height: 22%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--glow-lavender-2),
+    var(--glow-lavender) 55%,
+    #b9b2e2
+  );
+  filter: blur(26px);
+  opacity: 0.9;
+}
+
+.licence {
+  position: relative;
+  width: 74%;
+  aspect-ratio: 1.585;
+  border-radius: 14px;
+  padding: 8% 8%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(158deg, #53535f 0%, #43434f 48%, #383843 100%);
+  box-shadow:
+    0 2px 5px rgba(20, 20, 26, 0.24),
+    0 18px 40px rgba(28, 28, 30, 0.26);
+  color: #eceaf4;
+}
+
+.licence-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.licence-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fs-15);
+  font-weight: 500;
+}
+
+.licence-mark {
+  font-size: var(--fs-19);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  color: #d9d6e6;
+}
+
+.licence-bottom {
+  display: grid;
+  gap: 3px;
+}
+
+.licence-role {
+  font-size: var(--fs-14);
+  color: #b9b6c8;
+}
+
+.licence-no {
+  font-size: var(--fs-15);
+  letter-spacing: 0.14em;
+}
+
+.licence-reg {
+  font-size: var(--fs-13);
+  color: #a49fb8;
+  letter-spacing: 0.06em;
+}
+
+/* ══ graphic: regulator nodes → one integration ══════════════ */
+
+.gfx--nodes {
+  display: block;
+  padding: 8% 6%;
+}
+
+/* the rail-to-hub run; the hub pill paints over its right end */
+.gfx--nodes::before {
+  content: "";
+  position: absolute;
+  left: calc(6% + 8.6rem);
+  right: 6%;
+  top: 50%;
+  height: 1.5px;
+  background: rgba(28, 28, 30, 0.18);
+}
+
+.node,
+.hub {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--r-chip);
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(28, 28, 30, 0.05),
+    0 6px 16px rgba(28, 28, 30, 0.07);
+  font-size: var(--fs-14);
+  font-weight: 540;
+  color: var(--a-ink);
+  padding: 8px 15px;
+  left: 6%;
+}
+
+.node--1 {
+  top: 12%;
+}
+.node--2 {
+  top: 33%;
+}
+.node--3 {
+  top: 54%;
+}
+.node--4 {
+  top: 75%;
+}
+
+/* Nodes share a fixed width so every stub terminates on the rail; ragged
+   stub ends were the giveaway that this was CSS and not a diagram. */
+.node {
+  width: 5.4rem;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.node::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  width: 3.2rem;
+  height: 1.5px;
+  background: rgba(28, 28, 30, 0.18);
+}
+
+.rail {
+  position: absolute;
+  left: calc(6% + 8.6rem);
+  top: 18%;
+  bottom: 19%;
+  width: 1.5px;
+  background: rgba(28, 28, 30, 0.18);
+}
+
+.hub {
+  left: auto;
+  right: 6%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  padding: 11px 19px;
+  font-size: var(--fs-15);
+  box-shadow: var(--lift-chip);
+}
+
+/* ══ graphic: soft orbs on dark ══════════════════════════════ */
+
+.gfx--orbs {
+  overflow: hidden;
+}
+
+/* Two large ellipses overlapping in the centre, each keeping its own rim —
+   heavy blur merges them into a single blob and loses the effect. */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 44%,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.19) 44%,
+    rgba(255, 255, 255, 0.07) 62%,
+    rgba(255, 255, 255, 0) 71%
+  );
+  filter: blur(6px);
+  mix-blend-mode: screen;
+}
+
+.orb--1 {
+  width: 54%;
+  aspect-ratio: 0.76;
+  left: 9%;
+  top: 15%;
+}
+
+.orb--2 {
+  width: 54%;
+  aspect-ratio: 0.76;
+  right: 9%;
+  top: 15%;
+}
+
+.orb--3 {
+  width: 33%;
+  aspect-ratio: 0.7;
+  left: 33.5%;
+  top: 20%;
+  opacity: 0.55;
+}
+
+/* ══ graphic: concentric arcs on dark ════════════════════════ */
+
+.gfx--arcs {
+  overflow: hidden;
+}
+
+/* A lit rim is what makes these read as arcs; a radial fill alone just
+   glows. */
+.arc {
+  position: absolute;
+  left: 50%;
+  bottom: -34%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.11);
+  background: radial-gradient(
+    circle at 50% 10%,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    rgba(255, 255, 255, 0) 58%
+  );
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  filter: blur(3px);
+}
+
+.arc--1 {
+  width: 46%;
+  aspect-ratio: 1;
+}
+.arc--2 {
+  width: 74%;
+  aspect-ratio: 1;
+  opacity: 0.7;
+}
+.arc--3 {
+  width: 104%;
+  aspect-ratio: 1;
+  opacity: 0.45;
+}
+
+.arc-core {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
+  width: 26%;
+  aspect-ratio: 1.7;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0) 68%
+  );
+  filter: blur(16px);
+}
+
+/* ══ graphic: flow (pale blue) ═══════════════════════════════ */
+
+.gfx--flow {
+  display: block;
+}
+
+.flow-card {
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  padding: 13px 17px;
+  box-shadow:
+    0 1px 2px rgba(22, 24, 29, 0.05),
+    0 8px 20px rgba(22, 24, 29, 0.08);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.flow-title {
+  display: block;
+  font-size: var(--fs-14);
+  font-weight: 580;
+  color: var(--b-ink);
+  letter-spacing: -0.008em;
+}
+
+.flow-sub {
+  display: block;
+  font-size: var(--fs-13);
+  color: #6b7280;
+}
+
+.flow-card--head {
+  left: 0;
+  top: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.flow-card--a {
+  right: 0;
+  top: 40%;
+  left: 22%;
+}
+
+.flow-card--b {
+  right: 0;
+  top: 72%;
+  left: 22%;
+}
+
+.flow-icon {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 8px;
+  background: #1c1c22;
+  position: relative;
+}
+
+.flow-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+.connector {
+  position: absolute;
+  left: 9%;
+  top: 30%;
+  width: 13%;
+  height: 52%;
+  border-left: 1.5px solid rgba(22, 24, 29, 0.3);
+  border-bottom: 1.5px solid rgba(22, 24, 29, 0.3);
+  border-bottom-left-radius: 12px;
+}
+
+.flow-card--a::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 2.4rem;
+  height: 1.5px;
+  background: rgba(22, 24, 29, 0.3);
+}
+
+.pause {
+  position: absolute;
+  left: -4%;
+  bottom: 6%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(22, 24, 29, 0.12);
+}
+
+.pause::before,
+.pause::after {
+  content: "";
+  position: absolute;
+  top: 34%;
+  width: 3px;
+  height: 32%;
+  border-radius: 2px;
+  background: #16181d;
+}
+
+.pause::before {
+  left: 39%;
+}
+.pause::after {
+  right: 39%;
+}
+
+/* ══ graphic: 24 → 4 collapse (pale blue) ════════════════════ */
+
+.gfx--collapse {
+  display: block;
+}
+
+.collapse-card {
+  position: absolute;
+  left: 0;
+  top: 14%;
+  right: 14%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow:
+    0 1px 2px rgba(22, 24, 29, 0.05),
+    0 10px 26px rgba(22, 24, 29, 0.09);
+}
+
+.collapse-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin: 6px 0 14px;
+}
+
+.was {
+  font-size: var(--fs-19);
+  color: #9aa1a8;
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.now {
+  font-size: var(--fs-28);
+  font-weight: 600;
+  color: var(--b-ink);
+  letter-spacing: -0.02em;
+}
+
+.arr {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #9aa1a8;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  align-self: center;
+}
+
+.meter {
+  display: block;
+  height: 7px;
+  border-radius: 999px;
+  background: #e7eef2;
+  overflow: hidden;
+}
+
+.meter-fill {
+  display: block;
+  width: 15%;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.collapse-chip {
+  position: absolute;
+  right: 0;
+  bottom: 12%;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: var(--glass-blur);
+  border-radius: var(--r-chip);
+  padding: 9px 16px;
+  font-size: var(--fs-14);
+  font-weight: 520;
+  color: var(--b-ink);
+  box-shadow:
+    0 1px 2px rgba(22, 24, 29, 0.06),
+    0 10px 24px rgba(22, 24, 29, 0.1);
+}
+
+/* ══ graphic: glowing bar comparison (dark) ══════════════════ */
+
+.gfx--bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12%;
+  padding: 12% 12% 14%;
+  overflow: hidden;
+}
+
+.bar-col {
+  position: relative;
+  width: 26%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.bar-label {
+  font-size: var(--fs-13);
+  line-height: 1.35;
+  color: var(--c-body);
+  text-align: center;
+}
+
+.bar-label b {
+  display: block;
+  font-size: var(--fs-17);
+  font-weight: 600;
+  color: #fff;
+}
+
+.bar-label--low b {
+  color: var(--c-body);
+}
+
+.bar {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.bar--hi {
+  height: 78%;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f4ec 100%);
+  filter: blur(9px);
+  box-shadow:
+    0 0 60px rgba(255, 255, 255, 0.5),
+    0 0 120px rgba(255, 255, 255, 0.3);
+}
+
+.bar--lo {
+  height: 9%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #66667e 0%, #45455a 100%);
+  filter: blur(5px);
+}
+
+/* ══ graphic: 24mo → 4mo span (dark) ═════════════════════════ */
+
+/* align-items must be reset: .gfx sets place-items:center, which stops the
+   rows stretching and collapses the 1fr bar track to zero width. */
+.gfx--span {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: var(--sp-8);
+  padding: 12% 10%;
+  overflow: hidden;
+}
+
+/* label · track · value — the bar must own a full-width track or its
+   percentage width collapses to nothing. */
+.span-row {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr 4.6rem;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.span-label {
+  font-size: var(--fs-13);
+  color: var(--c-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.hbar {
+  height: 24px;
+  border-radius: 999px;
+  display: block;
+}
+
+.hbar--long {
+  width: 100%;
+  background: linear-gradient(90deg, #6d6d85, #45455a);
+  filter: blur(5px);
+}
+
+/* 4 of 24 months — a short bar needs less blur than a long one or it stops
+   reading as a bar at all. */
+.hbar--short {
+  width: 17%;
+  min-width: 42px;
+  background: linear-gradient(90deg, #ffffff, #f2f2ea);
+  filter: blur(3.5px);
+  box-shadow:
+    0 0 40px rgba(255, 255, 255, 0.5),
+    0 0 90px rgba(255, 255, 255, 0.28);
+}
+
+.span-val {
+  text-align: right;
+}
+
+.span-val {
+  font-size: var(--fs-15);
+  color: var(--c-body);
+}
+
+.span-val--hi {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ══ graphic: rings + lock (dark) ════════════════════════════ */
+
+.gfx--rings {
+  overflow: hidden;
+}
+
+/* Dark spheres with a lit top rim, nested — the rim is what separates each
+   shell from the one behind it. */
+.ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.03) 32%,
+    rgba(10, 10, 16, 0.22) 66%
+  );
+  box-shadow:
+    inset 0 3px 14px rgba(255, 255, 255, 0.1),
+    0 12px 32px rgba(0, 0, 0, 0.36);
+  filter: blur(1.5px);
+}
+
+.ring--1 {
+  width: 34%;
+  aspect-ratio: 1;
+}
+.ring--2 {
+  width: 58%;
+  aspect-ratio: 1;
+  opacity: 0.8;
+}
+.ring--3 {
+  width: 84%;
+  aspect-ratio: 1;
+  opacity: 0.6;
+}
+
+.lock {
+  position: relative;
+  z-index: 4;
+  width: 13%;
+  color: #fff;
+  fill: #fff;
+  filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.5));
+}
+
+/* ══ graphic: encryption mesh (dark) ═════════════════════════ */
+
+.gfx--shield {
+  overflow: hidden;
+}
+
+/* Nested spheres lit from one side — a blown-out core reads as a blob rather
+   than as a form. */
+.mesh {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    conic-gradient(
+      from 208deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.01) 34%,
+      rgba(255, 255, 255, 0.14) 60%,
+      rgba(255, 255, 255, 0) 86%
+    ),
+    radial-gradient(circle at 50% 100%, rgba(10, 10, 16, 0.3), transparent 62%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.34);
+  filter: blur(6px);
+}
+
+.mesh--2 {
+  width: 42%;
+  transform: translate(-50%, -50%) rotate(146deg);
+  opacity: 0.9;
+  filter: blur(4px);
+}
+
+.shield-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, #ffffff, #dcdcd2 76%);
+  filter: blur(3px);
+  box-shadow: 0 0 34px rgba(255, 255, 255, 0.34);
+}
+
+/* ══ graphic: permission toggles (dark) ══════════════════════ */
+
+.gfx--toggles {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 11%;
+  padding: 16% 13%;
+  overflow: hidden;
+}
+
+.tgl-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+/* The off state has to sit clearly above the panel tone or it disappears
+   into it. */
+.tgl {
+  flex: 1;
+  height: 30px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #55556a 0%, #3a3a4a 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 10px 22px rgba(0, 0, 0, 0.4);
+  filter: blur(1.4px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.tgl--on {
+  background: linear-gradient(180deg, #fdfdf8 0%, #e6e6dc 100%);
+  box-shadow:
+    0 0 46px rgba(255, 255, 255, 0.4),
+    0 12px 26px rgba(0, 0, 0, 0.4);
+  height: 38px;
+  padding: 3px;
+}
+
+.knob {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex: none;
+  background: radial-gradient(circle at 34% 28%, #ffffff, #c9c9bf 78%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.26);
+}
+
+.knob--sm {
+  width: 26px;
+  height: 26px;
+  background: radial-gradient(circle at 34% 28%, #7f7f92, #43434f 76%);
+  filter: blur(1.2px);
+  box-shadow: none;
+}
+
+/* ══ split section (regulators) ══════════════════════════════ */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: var(--sp-16);
+  align-items: center;
+}
+
+.reglist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-8);
+}
+
+.reglist li {
+  border: 1px solid var(--a-rule);
+  border-radius: var(--r-chip);
+  padding: 7px 14px;
+  font-size: var(--fs-14);
+  font-weight: 520;
+  color: var(--a-ink);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.reglist-more {
+  border-style: dashed;
+  color: var(--a-muted);
+  font-weight: 400;
+}
+
+/* ══ stat cards ══════════════════════════════════════════════ */
+
+.grid--stats {
+  gap: var(--sp-8);
+}
+
+/* Data surfaces stay flat: hairline border, no lift. */
+.stat {
+  background: #fff;
+  border: 1px solid var(--a-rule);
+  border-radius: 8px;
+  padding: var(--sp-8);
+}
+
+.stat-fig {
+  font-size: var(--fs-44);
+  font-weight: 580;
+  letter-spacing: -0.028em;
+  line-height: 1.05;
+  color: var(--a-ink);
+  margin: 0 0 var(--sp-3);
+}
+
+.stat p:last-child {
+  margin: 0;
+  font-size: var(--fs-15);
+  color: var(--a-body);
+}
+
+/* ══ closing + tagline ═══════════════════════════════════════ */
+
+.closing .lede {
+  margin-bottom: var(--sp-6);
+}
+
+.tagline {
+  padding: var(--sp-24) 0;
+}
+
+.tagline .display {
+  margin: 0;
+}
+
+/* ══ footer ══════════════════════════════════════════════════ */
+
+.foot {
+  background: var(--c-bg-2);
+  padding: var(--sp-12) 0;
+  border-top: 1px solid var(--c-rule);
+}
+
+.foot-in {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-6);
+  flex-wrap: wrap;
+}
+
+.brand--foot {
+  color: #fff;
+}
+
+.foot-note {
+  margin: 0;
+  font-size: var(--fs-14);
+  color: var(--c-muted);
+}
+
+/* ══ responsive ══════════════════════════════════════════════ */
+
+@media (max-width: 940px) {
+  .s {
+    padding: var(--sp-24) 0;
+  }
+
+  .grid--2,
+  .grid--3 {
+    grid-template-columns: 1fr;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+    gap: var(--sp-12);
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .plate,
+  .plate--hero,
+  .plate--tall {
+    aspect-ratio: 1.45;
+  }
+
+  .feature p,
+  .lede {
+    max-width: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .wrap {
+    padding: 0 var(--sp-6);
+  }
+
+  h1.display {
+    max-width: none;
+  }
+
+  /* Floating fragments stop overlapping the screenshot and stack. */
+  .chip--c,
+  .chip--f,
+  .chip--g {
+    display: none;
+  }
+
+  .chip {
+    font-size: var(--fs-13);
+    padding: 8px 13px;
+  }
+
+  .plate {
+    padding: 10% 7% 0;
+  }
+
+  .gfx--bars {
+    padding: 14% 8%;
+  }
+
+  .cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn--lg {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
