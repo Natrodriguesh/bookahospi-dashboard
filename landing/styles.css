@@ -2054,3 +2054,19 @@ h1.display {
     transform: translate(50%, 0) rotate(135deg);
   }
 }
+
+/* Emphasis inside body copy. Weight plus ink, not weight alone: at 400 on a
+   warm grey, bold on its own barely separates from the paragraph. */
+strong {
+  font-weight: 580;
+  color: var(--a-ink);
+}
+
+.s--b strong {
+  color: var(--b-ink);
+}
+
+.s--c strong,
+.feature--c strong {
+  color: var(--c-ink);
+}
