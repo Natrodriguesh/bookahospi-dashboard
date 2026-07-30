@@ -35,6 +35,12 @@
   /* ── action: the only saturated colour on the page ─────────── */
   --accent: #5266eb;
   --accent-hover: #4255d4;
+
+  /* The primary CTA only. Measured from the logo artwork rather than sampled
+     from the supplied swatch, which never reached disk — they read as the
+     same blue, but this one is exact. */
+  --cta: #0b30f2;
+  --cta-hover: #0827cf;
   --accent-soft: #4d7cfe; /* in-graphic toggles only */
 
   /* ── graphic glows ─────────────────────────────────────────── */
