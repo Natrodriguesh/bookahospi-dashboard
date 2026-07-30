@@ -1,0 +1,105 @@
+/* Mercury-derived design tokens — Bookahospi landing
+ * Companion to DESIGN.md. Values are second-hand; see PROVENANCE.md.
+ */
+
+:root {
+  /* ── canvas ─────────────────────────────────────────────── */
+  --bg-primary: #f6f5f2;
+  --bg-secondary: #ebe8e0;
+  --bg-tertiary: #ded9ca;
+  --surface: #ffffff;
+
+  /* ── ink ────────────────────────────────────────────────── */
+  --text-primary: #2a2924;
+  --text-secondary: #5a5548;
+  --text-muted: #8a8478;
+
+  /* ── action (only saturated colour on the page) ─────────── */
+  --accent: #5266eb;
+  --accent-hover: #4255d4;
+
+  /* ── decorative washes: mockups and light only, never CTAs ─ */
+  --wash-mid: #9cb4e8;
+  --wash-light: #cdddff;
+
+  /* ── lines ──────────────────────────────────────────────── */
+  --border: #ded9ca;
+  --border-strong: #c9c3b3;
+
+  /* ── semantic: status only ──────────────────────────────── */
+  --success: #2f7d57;
+  --warning: #c98a42;
+  --danger: #b54a3a;
+
+  /* ── type ───────────────────────────────────────────────── */
+  --font-display: "Tiempos Headline", "Iowan Old Style", Georgia, serif;
+  --font-body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --display-weight: 480; /* intermediate — do not snap to 500 */
+  --display-tracking: -0.01em;
+
+  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-22: 1.375rem;
+  --fs-28: 1.75rem;
+  --fs-36: 2.25rem;
+  --fs-48: 3rem;
+  --fs-72: 4.5rem;
+
+  /* ── space (4px base) ───────────────────────────────────── */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-12: 48px;
+  --sp-24: 96px;
+
+  /* ── geometry ───────────────────────────────────────────── */
+  --measure: 1080px; /* marketing */
+  --radius-card: 8px;
+  --radius-shot: 12px; /* product screenshots */
+  --radius-pill: 999px;
+
+  /* ── depth: dashboard surfaces stay flat ────────────────── */
+  --lift-modal: 0 12px 32px rgba(42, 41, 36, 0.1);
+
+  /* ── depth: marketing showcase only ─────────────────────── */
+  --lift-card:
+    0 1px 2px rgba(42, 41, 36, 0.04), 0 8px 24px rgba(42, 41, 36, 0.06),
+    0 24px 64px rgba(42, 41, 36, 0.08);
+  --lift-float:
+    0 2px 4px rgba(42, 41, 36, 0.05), 0 12px 32px rgba(42, 41, 36, 0.1),
+    0 40px 80px rgba(42, 41, 36, 0.1);
+
+  --wash: radial-gradient(
+    120% 90% at 50% 0%,
+    var(--wash-light) 0%,
+    rgba(205, 221, 255, 0) 62%
+  );
+  --fade-to-canvas: linear-gradient(
+    rgba(246, 245, 242, 0) 0%,
+    var(--bg-primary) 100%
+  );
+
+  /* chrome floating over a screenshot */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-blur: blur(12px) saturate(140%);
+}
+
+/* Money, percentages, counts — anything a reader compares. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 13px uppercase label above a figure. */
+.eyebrow {
+  font-size: var(--fs-13);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
