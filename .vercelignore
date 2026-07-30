@@ -1,0 +1,23 @@
+# Repository-root ignore rules.
+#
+# Vercel reads .vercelignore from the deploy root. This project's Root
+# Directory is unset, so it deploys the whole repository and landing/.vercelignore
+# is never consulted — these rules are the ones that actually apply.
+#
+# landing/assets/ holds the full set of raw admin captures (~27 MB) kept as
+# source material. They show real candidate names and email addresses, and a
+# static host serves anything inside the deployed directory, so without these
+# rules every one of those screenshots is reachable by anyone who guesses the
+# path. Only the cropped, blurred derivatives in landing/assets/shots/ belong
+# on a public URL.
+
+landing/assets/*
+!landing/assets/shots/
+!landing/assets/fonts/
+
+# Source material, docs and build tooling — no reason to ship them.
+landing/reference/
+landing/DESIGN.md
+landing/PROVENANCE.md
+landing/build-standalone.py
+landing/standalone.html
