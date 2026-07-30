@@ -1,0 +1,18 @@
+# Keep the deploy to exactly what the page loads.
+#
+# assets/ holds the full set of raw admin captures (~27 MB) as source material.
+# They show real candidate names and email addresses, and a static host serves
+# anything inside the deployed directory, so publishing them would expose every
+# one of those screenshots to anyone who guesses the path. Only the cropped,
+# blurred derivatives in assets/shots/ belong on a public URL.
+
+assets/*
+!assets/shots/
+!assets/fonts/
+
+# Source material and docs — no reason to ship them.
+reference/
+DESIGN.md
+PROVENANCE.md
+build-standalone.py
+standalone.html
