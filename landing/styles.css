@@ -667,7 +667,7 @@ h1.display {
 .gfx--nodes::before {
   content: "";
   position: absolute;
-  left: calc(6% + 12rem);
+  left: calc(6% + 16rem);
   right: 6%;
   top: 42%;
   height: 1.5px;
@@ -733,14 +733,16 @@ h1.display {
   position: absolute;
   left: 100%;
   top: 50%;
-  width: 3rem;
+  width: 7rem;
   height: 1.5px;
   background: rgba(28, 28, 30, 0.18);
 }
 
+/* Sits close to the hub, so the run into "One integration" is short and the
+   junction reads as one group on the right rather than a long empty span. */
 .rail {
   position: absolute;
-  left: calc(6% + 12rem);
+  left: calc(6% + 16rem);
   top: 11.5%;
   bottom: 11.5%;
   width: 1.5px;
