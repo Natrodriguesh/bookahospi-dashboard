@@ -652,16 +652,22 @@ h1.display {
 
 /* ══ graphic: regulator nodes → one integration ══════════════ */
 
+/* This card has no screenshot to inset, so the diagram takes the whole plate.
+   The extra height is what lets the wordmark logos render large enough to
+   read. */
+.plate:has(.gfx--nodes) {
+  padding: 0;
+}
+
 .gfx--nodes {
   display: block;
-  padding: 8% 6%;
 }
 
 /* the rail-to-hub run; the hub pill paints over its right end */
 .gfx--nodes::before {
   content: "";
   position: absolute;
-  left: calc(6% + 8.6rem);
+  left: calc(6% + 12rem);
   right: 6%;
   top: 50%;
   height: 1.5px;
@@ -685,25 +691,41 @@ h1.display {
   left: 6%;
 }
 
+/* Five nodes, centres spaced evenly and symmetric about the hub at 50%. */
 .node--1 {
-  top: 12%;
+  top: 3.9%;
 }
 .node--2 {
-  top: 33%;
+  top: 23.2%;
 }
 .node--3 {
-  top: 54%;
+  top: 42.4%;
 }
 .node--4 {
-  top: 75%;
+  top: 61.7%;
+}
+.node--5 {
+  top: 80.9%;
 }
 
 /* Nodes share a fixed width so every stub terminates on the rail; ragged
    stub ends were the giveaway that this was CSS and not a diagram. */
 .node {
-  width: 5.4rem;
+  width: 9rem;
   justify-content: center;
-  padding: 8px 0;
+  padding: 8px 12px;
+}
+
+/* Regulator marks vary from square emblems to wide wordmarks. A fixed box
+   with object-fit keeps them at one optical weight instead of letting the
+   wide ones dominate. */
+.node img {
+  display: block;
+  height: 30px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  margin: 0 auto;
 }
 
 .node::after {
@@ -711,16 +733,16 @@ h1.display {
   position: absolute;
   left: 100%;
   top: 50%;
-  width: 3.2rem;
+  width: 3rem;
   height: 1.5px;
   background: rgba(28, 28, 30, 0.18);
 }
 
 .rail {
   position: absolute;
-  left: calc(6% + 8.6rem);
-  top: 18%;
-  bottom: 19%;
+  left: calc(6% + 12rem);
+  top: 11.5%;
+  bottom: 11.5%;
   width: 1.5px;
   background: rgba(28, 28, 30, 0.18);
 }
