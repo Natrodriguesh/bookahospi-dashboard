@@ -662,9 +662,28 @@ h1.display {
   line-height: 1.1;
 }
 
+/* The verification block: code plus the issuer's mark. The rest of the
+   product is white-labeled; this sits on the credential itself, where the
+   issuer is what makes the code worth scanning. */
+.licence-verify {
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  width: 24%;
+  flex: none;
+  /* clears the rule under it; flex-end otherwise parks the mark on the line */
+  margin-bottom: 5px;
+}
+
+.licence-brand {
+  width: 62%;
+  height: auto;
+  opacity: 0.8;
+}
+
 /* A real code, encoding the public verification URL for this credential. */
 .licence-qr {
-  width: 22%;
+  width: 100%;
   aspect-ratio: 1;
   flex: none;
   color: #fff;
@@ -1722,4 +1741,14 @@ h1.display {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* ══ graphic: rotating globe ═════════════════════════════════ */
+
+.globe {
+  width: 100%;
+  aspect-ratio: 62 / 35;
+  display: block;
+  position: relative;
+  z-index: 1;
 }
