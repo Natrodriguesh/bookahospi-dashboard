@@ -14,6 +14,7 @@
 landing/assets/*
 !landing/assets/shots/
 !landing/assets/fonts/
+!landing/assets/brand/
 
 # Source material, docs and build tooling — no reason to ship them.
 landing/reference/
