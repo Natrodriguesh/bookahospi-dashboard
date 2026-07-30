@@ -1775,11 +1775,11 @@ h1.display {
 .cobrand {
   position: absolute;
   z-index: 5;
-  /* Sits over the empty document-preview panel rather than dead centre: with
-     no plate behind it, the wordmark landed on the client list and both
-     became unreadable. */
-  top: 54%;
-  left: 61%;
+  /* Straddles the capture's top edge, centred on it. The plate's 5% top
+     padding is a share of its width, so against a 1.95 plate that edge sits
+     at 9.75% of the height. */
+  top: 9.75%;
+  left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
