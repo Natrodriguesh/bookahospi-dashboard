@@ -1,22 +1,21 @@
 # Repository-root ignore rules.
 #
-# Vercel reads .vercelignore from the deploy root. This project's Root
-# Directory is unset, so it deploys the whole repository and landing/.vercelignore
-# is never consulted — these rules are the ones that actually apply.
+# Vercel reads .vercelignore from the deploy root, and this project's Root
+# Directory is unset, so it deploys the whole repository — these are the rules
+# that actually apply.
 #
-# landing/assets/ holds the full set of raw admin captures (~27 MB) kept as
-# source material. They show real candidate names and email addresses, and a
-# static host serves anything inside the deployed directory, so without these
-# rules every one of those screenshots is reachable by anyone who guesses the
-# path. Only the cropped, blurred derivatives in landing/assets/shots/ belong
-# on a public URL.
+# Deliberately no re-inclusion patterns. An earlier version excluded
+# landing/assets/* and re-included subdirectories with "!", which relies on
+# the ignore implementation honouring negation after a wildcard; the logo
+# never reached the deploy. Everything publishable now lives under
+# landing/assets/ and everything excluded lives outside it, so these are
+# plain excludes with nothing to get wrong.
+#
+# landing/_captures/ holds the raw admin screenshots kept as source material.
+# They show real candidate names and email addresses, and a static host serves
+# anything inside the deployed directory, so they must never ship.
 
-landing/assets/*
-!landing/assets/shots/
-!landing/assets/fonts/
-!landing/assets/brand/
-
-# Source material, docs and build tooling — no reason to ship them.
+landing/_captures/
 landing/reference/
 landing/DESIGN.md
 landing/PROVENANCE.md

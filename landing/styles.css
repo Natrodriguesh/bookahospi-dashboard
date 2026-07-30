@@ -322,26 +322,32 @@ h1.display {
 /* ══ plates: the tinted plane a graphic sits on ══════════════ */
 
 .plate {
+  --plate-tone: var(--a-panel);
   position: relative;
   isolation: isolate;
   overflow: hidden;
   border-radius: var(--r-plate);
-  background: var(--a-panel);
-  aspect-ratio: 1.52;
+  background: var(--plate-tone);
+  /* The screenshot crops are wide and short; a taller plate left a dead band
+     under them. */
+  aspect-ratio: 1.78;
   display: grid;
   place-items: center;
-  padding: 9% 9% 0;
+  padding: 8% 8% 0;
 }
 
 .plate--hero {
+  --plate-tone: #e9e6df;
   aspect-ratio: 2.16;
   padding: 5.5% 6% 0;
-  background: linear-gradient(180deg, #efede7, #e9e6df);
+  background: linear-gradient(180deg, #efede7, var(--plate-tone));
 }
 
+/* Sized to the crop it holds (roughly 2.9:1) so the plate isn't mostly empty
+   below the screenshot. */
 .plate--tall {
-  aspect-ratio: 1.46;
-  padding: 9% 8% 0;
+  aspect-ratio: 1.62;
+  padding: 11% 7% 0;
 }
 
 .plate--dark {
@@ -382,18 +388,8 @@ h1.display {
   opacity: 0.5;
 }
 
-/* a screenshot that runs off the bottom of its plate */
-.fade {
-  position: absolute;
-  inset: auto 0 0;
-  height: 26%;
-  background: linear-gradient(rgba(236, 234, 228, 0) 0%, var(--a-panel) 88%);
-  z-index: 3;
-}
-
-.plate--hero .fade {
-  background: linear-gradient(rgba(233, 230, 223, 0) 0%, #e9e6df 88%);
-}
+/* The bottom dissolve is applied by .plate:has(.shot)::after for every
+   screenshot plate, so no per-plate element is needed. */
 
 /* ══ product screenshots ═════════════════════════════════════ */
 
@@ -413,24 +409,16 @@ h1.display {
   filter: var(--shot-filter-soft);
 }
 
-.shot--edge {
-  width: 118%;
-  max-width: none;
-  margin-left: 6%;
-}
-
-/* Re-tints the desaturated capture toward the wash hue. Sits above the
-   screenshot (z-index 1) and below the floating chrome (z-index 4) so chips
-   stay crisp and true-coloured. */
+/* Every plate holding a screenshot dissolves it into the plate tone at the
+   bottom edge, so the capture reads as continuing past the card. */
 .plate:has(.shot)::after {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: 2;
+  inset: auto 0 0;
+  height: 30%;
+  z-index: 3;
   pointer-events: none;
-  background: var(--shot-tint);
-  mix-blend-mode: color;
-  opacity: 0.55;
+  background: linear-gradient(transparent 0%, var(--plate-tone) 92%);
 }
 
 /* ══ floating chrome over a screenshot ═══════════════════════ */
@@ -457,24 +445,29 @@ h1.display {
   font-size: var(--fs-14);
 }
 
+/* Hero chips sit at the edges of the capture. Now that the screenshot is
+   legible, a chip parked over a counter hides the thing it is meant to
+   support. chip--b is placed to cover the capture's own orange action button,
+   which is the one element that fights the palette. */
 .chip--a {
-  top: 26%;
-  left: 4%;
+  bottom: 20%;
+  left: 3%;
 }
 .chip--b {
-  top: 15%;
-  right: 5%;
+  top: 5.5%;
+  right: 4.5%;
 }
 .chip--c {
-  bottom: 16%;
-  left: 30%;
+  bottom: 20%;
+  right: 4%;
 }
 .chip--d {
   top: 30%;
   left: 3%;
 }
+/* Clear of the action buttons down the right edge of the capture. */
 .chip--e {
-  top: 17%;
+  top: 6%;
   right: 4%;
 }
 .chip--f {
@@ -485,9 +478,10 @@ h1.display {
   top: 52%;
   right: 5%;
 }
+/* Sits below the regulator tab strip so it never covers the action buttons. */
 .chip--h {
-  top: 20%;
-  right: 6%;
+  bottom: 22%;
+  right: 4%;
 }
 
 .spark {
@@ -764,26 +758,28 @@ h1.display {
   mix-blend-mode: screen;
 }
 
+/* Wider than tall, so both ellipses fit inside the plate. Taller than the
+   plate and their edges clip, which merges them back into one blob. */
 .orb--1 {
   width: 54%;
-  aspect-ratio: 0.76;
-  left: 9%;
-  top: 15%;
+  aspect-ratio: 1.3;
+  left: 4%;
+  top: 14%;
 }
 
 .orb--2 {
   width: 54%;
-  aspect-ratio: 0.76;
-  right: 9%;
-  top: 15%;
+  aspect-ratio: 1.3;
+  right: 4%;
+  top: 14%;
 }
 
 .orb--3 {
-  width: 33%;
-  aspect-ratio: 0.7;
-  left: 33.5%;
+  width: 34%;
+  aspect-ratio: 1.2;
+  left: 33%;
   top: 20%;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 /* ══ graphic: concentric arcs on dark ════════════════════════ */

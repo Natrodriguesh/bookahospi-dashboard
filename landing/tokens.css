@@ -102,18 +102,15 @@
   --glass: rgba(255, 255, 255, 0.78);
   --glass-blur: blur(14px) saturate(150%);
 
-  /* Product captures carry their own saturated accents (a vivid blue and a
-     strong orange). Blur alone leaves the orange reading loudly against the
-     cream; near-total desaturation plus a cool re-tint folds the captures into
-     this palette so they behave as texture. */
-  --shot-filter: blur(3.5px) grayscale(0.88) contrast(0.97) brightness(1.03);
-  --shot-filter-soft: blur(1.8px) grayscale(0.84) contrast(0.98)
-    brightness(1.03);
-  --shot-tint: linear-gradient(
-    155deg,
-    rgba(167, 159, 212, 0.5) 0%,
-    rgba(205, 221, 255, 0.42) 100%
-  );
+  /* Product captures stay legible: the screenshot is evidence, not texture.
+     An earlier pass blurred and near-desaturated them to hide the capture's
+     own orange accent, which made the product unreadable — the wrong trade.
+     Mild desaturation keeps that accent from competing with the page while the
+     UI stays sharp; the dissolve into the plate is done with a gradient
+     overlay (see .fade), which is Mercury's own treatment and preserves the
+     card's lift in a way a blur or a mask does not. */
+  --shot-filter: saturate(0.82) contrast(1.01);
+  --shot-filter-soft: saturate(0.86) contrast(1.01);
 }
 
 .tabular {
