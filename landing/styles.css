@@ -336,10 +336,12 @@ h1.display {
   padding: 8% 8% 0;
 }
 
+/* Sized so the hero capture bleeds slightly past the bottom edge rather than
+   sitting inside the plate with room to spare. */
 .plate--hero {
   --plate-tone: #e9e6df;
-  aspect-ratio: 2.16;
-  padding: 5.5% 6% 0;
+  aspect-ratio: 1.95;
+  padding: 5% 6% 0;
   background: linear-gradient(180deg, #efede7, var(--plate-tone));
 }
 
