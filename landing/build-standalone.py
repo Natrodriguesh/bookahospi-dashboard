@@ -40,8 +40,11 @@ def image_data_uri(path, quality=82):
 
     im = Image.open(os.path.join(HERE, path))
     has_alpha = im.mode in ("RGBA", "LA", "PA") or "transparency" in im.info
+    # Logos and marks stay lossless whether or not they carry alpha: they are
+    # flat colour with fine lettering, exactly what JPEG smears.
+    is_mark = "/brand/" in path or "/regulators/" in path
     buf = io.BytesIO()
-    if has_alpha:
+    if has_alpha or is_mark:
         im.convert("RGBA").save(buf, "PNG", optimize=True)
         mime = "image/png"
     else:
