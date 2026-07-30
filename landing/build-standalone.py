@@ -28,15 +28,26 @@ def b64(path):
         return base64.b64encode(f.read()).decode("ascii")
 
 
-def jpeg_data_uri(path, quality=82):
+def image_data_uri(path, quality=82):
     """Screenshots are shown blurred, so JPEG costs nothing visually and cuts
-    the payload roughly fourfold against PNG."""
+    the payload roughly fourfold against PNG.
+
+    Anything with an alpha channel stays PNG: the logo variants are
+    transparent, and flattening them onto a JPEG background would put a solid
+    rectangle behind the mark.
+    """
     from PIL import Image
 
-    im = Image.open(os.path.join(HERE, path)).convert("RGB")
+    im = Image.open(os.path.join(HERE, path))
+    has_alpha = im.mode in ("RGBA", "LA", "PA") or "transparency" in im.info
     buf = io.BytesIO()
-    im.save(buf, "JPEG", quality=quality, optimize=True)
-    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+    if has_alpha:
+        im.convert("RGBA").save(buf, "PNG", optimize=True)
+        mime = "image/png"
+    else:
+        im.convert("RGB").save(buf, "JPEG", quality=quality, optimize=True)
+        mime = "image/jpeg"
+    return f"data:{mime};base64," + base64.b64encode(buf.getvalue()).decode("ascii")
 
 
 css = read("tokens.css") + "\n" + read("styles.css")
@@ -66,7 +77,7 @@ if not body:
 body = body.group(1)
 
 for src in sorted(set(re.findall(r'src="(assets/[^"]+)"', body))):
-    body = body.replace(f'src="{src}"', f'src="{jpeg_data_uri(src)}"')
+    body = body.replace(f'src="{src}"', f'src="{image_data_uri(src)}"')
 if "assets/" in body:
     sys.exit("an asset reference was left unresolved")
 

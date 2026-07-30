@@ -9,6 +9,7 @@
 assets/*
 !assets/shots/
 !assets/fonts/
+!assets/brand/
 
 # Source material and docs — no reason to ship them.
 reference/

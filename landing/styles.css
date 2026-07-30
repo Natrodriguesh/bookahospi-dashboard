@@ -205,10 +205,23 @@ h1.display {
 }
 
 .brand {
-  font-size: var(--fs-22);
-  font-weight: 640;
-  letter-spacing: -0.03em;
-  color: var(--a-ink);
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+/* Monochrome logo variants: black on the light surfaces, white on the dark
+   ones. The full-colour mark uses a blue far more saturated than the accent,
+   which would break the one-saturated-colour rule — swap the src to
+   booka-colour.png only if that is wanted deliberately. */
+.brand-mark {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+.brand-mark--foot {
+  height: 28px;
 }
 
 .nav-links {
@@ -1416,10 +1429,6 @@ h1.display {
   align-items: baseline;
   gap: var(--sp-6);
   flex-wrap: wrap;
-}
-
-.brand--foot {
-  color: #fff;
 }
 
 .foot-note {
