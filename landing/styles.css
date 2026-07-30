@@ -595,10 +595,10 @@ h1.display {
 
 .licence {
   position: relative;
-  width: 74%;
-  aspect-ratio: 1.585;
-  border-radius: 14px;
-  padding: 8% 8%;
+  width: 76%;
+  aspect-ratio: 1.68;
+  border-radius: 16px;
+  padding: 6.5% 7%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -615,40 +615,171 @@ h1.display {
   justify-content: space-between;
 }
 
+/* Where the customer's mark goes. Left as a shape rather than a logo: the
+   section's claim is that the credential carries their brand, not ours. */
+.licence-logo {
+  width: 34%;
+  height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.34),
+    rgba(255, 255, 255, 0.14)
+  );
+}
+
 .licence-state {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: var(--fs-15);
+  font-size: var(--fs-13);
   font-weight: 500;
 }
 
-.licence-mark {
-  font-size: var(--fs-19);
-  font-weight: 650;
-  letter-spacing: -0.03em;
-  color: #d9d6e6;
+.licence-body {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
 }
 
-.licence-bottom {
+.licence-id {
   display: grid;
-  gap: 3px;
+  gap: 2px;
 }
 
 .licence-role {
-  font-size: var(--fs-14);
-  color: #b9b6c8;
-}
-
-.licence-no {
-  font-size: var(--fs-15);
-  letter-spacing: 0.14em;
-}
-
-.licence-reg {
   font-size: var(--fs-13);
-  color: #a49fb8;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a9a5bd;
+}
+
+.licence-name {
+  font-size: var(--fs-22);
+  font-weight: 560;
+  letter-spacing: -0.018em;
+  line-height: 1.1;
+}
+
+/* A real code, encoding the public verification URL for this credential. */
+.licence-qr {
+  width: 22%;
+  aspect-ratio: 1;
+  flex: none;
+  color: #fff;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+  opacity: 0.94;
+}
+
+.licence-data {
+  display: flex;
+  gap: 9%;
+  margin: 0;
+  padding-top: 6.5%;
+  border-top: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+.licence-data dt {
+  font-size: var(--fs-13);
+  color: #a9a5bd;
+  margin-bottom: 1px;
+}
+
+.licence-data dd {
+  margin: 0;
+  font-size: var(--fs-14);
+  font-weight: 520;
+}
+
+/* ══ graphic: origin-to-destination map ═════════════════════ */
+
+/* A graticule rather than a drawn coastline: it reads as international
+   without pretending to be cartography, and it keeps the two routes as the
+   only thing with weight. */
+.gfx--map {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+}
+
+.map-globe {
+  fill: none;
+  stroke: rgba(28, 28, 30, 0.13);
+  stroke-width: 1.2;
+}
+
+.map-routes path {
+  fill: none;
+  stroke: rgba(28, 28, 30, 0.34);
+  stroke-width: 2;
+  stroke-dasharray: 4 6;
+  stroke-linecap: round;
+}
+
+.pin {
+  fill: var(--a-ink);
+}
+
+.map-label {
+  fill: var(--a-body);
+  font-family: var(--font);
+  /* viewBox units: the SVG scales down to roughly 0.74x at card width, so
+     this lands near 13px on screen. */
+  font-size: 18px;
+  font-weight: 560;
+}
+
+.traveller {
+  fill: var(--accent);
+  offset-rotate: 0deg;
+  opacity: 0;
+  animation: travel 5.2s cubic-bezier(0.45, 0.05, 0.35, 1) infinite;
+  filter: drop-shadow(0 0 6px rgba(82, 102, 235, 0.55));
+}
+
+/* Each leg owns half the cycle, so the two run in sequence and the pause
+   between loops reads as arrival rather than a stall. */
+.traveller--1 {
+  offset-path: path("M200,168 Q305,62 412,196");
+}
+
+.traveller--2 {
+  offset-path: path("M412,196 Q292,74 218,108");
+  animation-delay: 2.6s;
+}
+
+@keyframes travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  42% {
+    offset-distance: 100%;
+    opacity: 1;
+  }
+  50% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .traveller {
+    animation: none;
+    opacity: 1;
+    offset-distance: 100%;
+  }
 }
 
 /* ══ graphic: regulator nodes → one integration ══════════════ */
