@@ -464,10 +464,9 @@ h1.display {
   right: 4%;
 }
 .chip--d {
-  top: 30%;
+  bottom: 16%;
   left: 3%;
 }
-/* Clear of the action buttons down the right edge of the capture. */
 .chip--e {
   top: 6%;
   right: 4%;
