@@ -669,7 +669,7 @@ h1.display {
   position: absolute;
   left: calc(6% + 12rem);
   right: 6%;
-  top: 50%;
+  top: 42%;
   height: 1.5px;
   background: rgba(28, 28, 30, 0.18);
 }
@@ -750,12 +750,51 @@ h1.display {
 .hub {
   left: auto;
   right: 6%;
-  top: 50%;
+  top: 42%;
   transform: translateY(-50%);
   width: auto;
   padding: 11px 19px;
   font-size: var(--fs-15);
   box-shadow: var(--lift-chip);
+}
+
+/* What the single integration buys, hung below the hub: many authorities in,
+   one contract, unlimited throughput out. There is no room for this beside
+   the hub — the rail already takes most of the card's width. */
+/* Starts below the hub, not at its centre: the drop paints after the hub, so
+   an earlier start drew a line straight across the pill. */
+.drop {
+  position: absolute;
+  right: calc(6% + 4rem);
+  top: 50%;
+  height: 14%;
+  width: 1.5px;
+  background: rgba(28, 28, 30, 0.18);
+}
+
+.outcome {
+  position: absolute;
+  right: 6%;
+  top: 64%;
+  display: grid;
+  gap: 2px;
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px 18px;
+  box-shadow: var(--lift-chip);
+  text-align: left;
+}
+
+.outcome-title {
+  font-size: var(--fs-14);
+  font-weight: 580;
+  color: var(--a-ink);
+  letter-spacing: -0.008em;
+}
+
+.outcome-sub {
+  font-size: var(--fs-13);
+  color: var(--a-muted);
 }
 
 /* ══ graphic: soft orbs on dark ══════════════════════════════ */
