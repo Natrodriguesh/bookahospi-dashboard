@@ -24,6 +24,13 @@ npm run dev
   todos los formularios, filtrables por país, nacionalidad, profesión y años
   de experiencia.
 
+## Vista previa como archivo único (para compartir sin desplegar)
+
+`npm run build:artifact` genera `dist-artifact/index.html`: el mismo dashboard
+compilado en un solo archivo HTML autocontenido (JS y CSS inlineados), útil
+para publicarlo como preview sin necesidad de hosting. La app usa `HashRouter`
+y `localStorage`, así que funciona igual dentro de un solo archivo estático.
+
 ## Qué falta (Fase 2, pendiente de definir con más detalle)
 
 - Redacción de mensajes (correo / WhatsApp) asistida con la API de Claude.
