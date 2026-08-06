@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Platform — Booka</title>
+    <meta
+      name="description"
+      content="Three named agents run Booka's credentialing pipeline: Verifier Agent, Regulator Agent, and Trust Agent. See how each one works."
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/inter-latin-opsz-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ══ nav ══════════════════════════════════════════════════ -->
+    <header class="nav">
+      <div class="nav-in">
+        <a class="brand" href="index.html#top">
+          <img
+            class="brand-mark"
+            src="assets/brand/booka-dark.png"
+            alt="Booka"
+            width="83"
+            height="24"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="plataforma.html" class="is-active">Platform</a>
+          <a href="profesionales.html">For professionals</a>
+          <a href="index.html#impact">Impact</a>
+          <a href="index.html#regulators">Regulators</a>
+          <a href="index.html#security">Security</a>
+        </nav>
+        <div class="nav-cta">
+          <a class="btn btn--ghost" href="index.html#license">Sign in</a>
+          <a class="btn btn--primary" href="index.html#license">Booka Demo</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ══ hero ═══════════════════════════════════════════════ -->
+      <section class="s s--a hero">
+        <div class="wrap">
+          <p class="eyebrow">The platform</p>
+          <h1 class="display">
+            One layer. Three agents. A pipeline you can point to.
+          </h1>
+          <p class="lede">
+            Booka isn't a single black box — it's three named agents, each
+            running one stage of a credential's path from upload to cleared
+            licence. <strong>Every step has an owner, and every claim on this
+            page names the agent behind it.</strong>
+          </p>
+          <div class="cta-row">
+            <a class="btn btn--primary btn--lg" href="index.html#license">Booka Demo</a>
+            <a class="btn btn--tonal btn--lg" href="#verifier">See how it works</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ Verifier Agent ═══════════════════════════════════════ -->
+      <section class="s s--a" id="verifier">
+        <div class="wrap">
+          <div class="agent-name-row">
+            <h2 class="display" style="margin-bottom: 0">Verifier Agent</h2>
+            <span class="status status--live">Live</span>
+          </div>
+          <p class="lede">
+            Primary-source verification on every document a candidate
+            submits — checked against the issuing institution, not just read
+            and filed.
+          </p>
+
+          <div class="split" style="margin-top: var(--sp-12)">
+            <div>
+              <ol class="timeline">
+                <li class="step">
+                  <span class="step-num tabular">1</span>
+                  <h4>Document received</h4>
+                  <p>A passport, degree, transcript, or licence is uploaded through your branded portal.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">2</span>
+                  <h4>Extraction</h4>
+                  <p>Every field is read and structured — name, issuer, dates, document number — not just filed as an attachment.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">3</span>
+                  <h4>Primary-source check</h4>
+                  <p>Matched against the issuing institution's own record where one is reachable, and against the destination regulator's requirements in every case.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">4</span>
+                  <h4>Exceptions flagged</h4>
+                  <p>Anything inconsistent — a mismatched name, an expired document, a missing apostille — goes to a human reviewer before it moves on.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">5</span>
+                  <h4>Cleared for submission</h4>
+                  <p>A verified file is handed to the Regulator Agent. Nothing reaches a regulator until it clears here.</p>
+                </li>
+              </ol>
+            </div>
+            <figure class="plate plate--tall">
+              <span class="wash" aria-hidden="true"></span>
+              <img
+                class="shot"
+                src="assets/shots/hero-verification.jpg"
+                alt="Verifier Agent workspace showing a candidate's uploaded documents under review"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="chip chip--sm chip--h tabular">94% first-submission acceptance</span>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ Regulator Agent (cool ground) ═══════════════════════ -->
+      <section class="s s--b" id="regulator">
+        <div class="wrap">
+          <div class="agent-name-row">
+            <h2 class="display" style="margin-bottom: 0">Regulator Agent</h2>
+            <span class="status status--live">Live</span>
+          </div>
+          <p class="lede">
+            Interfaces directly with the destination licensing authority —
+            submission, status tracking, and resubmission if a regulator
+            comes back with a request.
+          </p>
+
+          <div class="split" style="margin-top: var(--sp-12)">
+            <div>
+              <ol class="timeline">
+                <li class="step">
+                  <span class="step-num tabular">1</span>
+                  <h4>Cleared file received</h4>
+                  <p>Nothing arrives here until the Verifier Agent has signed off on it.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">2</span>
+                  <h4>Formatted per authority</h4>
+                  <p>Matched to that regulator's own submission format — SCFHS, DHA and GMC don't take the same file the same way, and the agent knows the difference.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">3</span>
+                  <h4>Submitted</h4>
+                  <p>Filed directly with the destination licensing authority under your brand.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">4</span>
+                  <h4>Status tracked</h4>
+                  <p>Polled per authority, not left sitting in an inbox waiting for someone to check.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">5</span>
+                  <h4>Resolved</h4>
+                  <p>Approved, or returned with a specific request the Verifier Agent can act on directly.</p>
+                </li>
+              </ol>
+            </div>
+            <figure class="plate">
+              <span class="wash" aria-hidden="true"></span>
+              <div class="regulator-grid" aria-hidden="true" style="width: 100%">
+                <img src="assets/regulators/scfhs.png" alt="" />
+                <img src="assets/regulators/dha.png" alt="" />
+                <img src="assets/regulators/gmc.png" alt="" />
+                <img src="assets/regulators/dataflow.png" alt="" />
+                <img src="assets/regulators/sanidad.png" alt="" />
+                <img src="assets/regulators/mofa.png" alt="" />
+              </div>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ Trust Agent (dark) ═══════════════════════════════════ -->
+      <section class="s s--c s--c-deep" id="trust">
+        <div class="wrap">
+          <div class="agent-name-row">
+            <h2 class="display" style="margin-bottom: 0">Trust Agent</h2>
+            <span class="status status--pilot">Pilot</span>
+          </div>
+          <p class="lede">
+            Manages the compliance layer around getting a verified
+            professional into place — the part that runs after the
+            credential clears and before they start work.
+          </p>
+
+          <div class="split" style="margin-top: var(--sp-12)">
+            <div>
+              <ol class="timeline">
+                <li class="step">
+                  <span class="step-num tabular">1</span>
+                  <h4>Credential cleared</h4>
+                  <p>The file has a licence or certificate behind it, issued by the destination regulator.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">2</span>
+                  <h4>Anchored</h4>
+                  <p>Hashed and written to an immutable ledger, so its state on the day it cleared can always be proven.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">3</span>
+                  <h4>Compliance tracked</h4>
+                  <p>The professional's and the employer's status are kept current — not just the document's.</p>
+                </li>
+                <li class="step">
+                  <span class="step-num tabular">4</span>
+                  <h4>Placement supported</h4>
+                  <p>The compliance layer around getting them into position, running behind the scenes on the same white-labeled layer as the other two agents.</p>
+                </li>
+              </ol>
+            </div>
+            <figure class="plate plate--c">
+              <div class="gfx gfx--rings" aria-hidden="true">
+                <span class="ring ring--3"></span>
+                <span class="ring ring--2"></span>
+                <span class="ring ring--1"></span>
+                <svg class="lock" viewBox="0 0 24 24">
+                  <path d="M7 10V8a5 5 0 0110 0v2" fill="none" stroke="currentColor" stroke-width="2" />
+                  <rect x="4.5" y="10" width="15" height="10" rx="2.5" />
+                </svg>
+                <span class="grain"></span>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ closing ════════════════════════════════════════════ -->
+      <section class="s s--a closing">
+        <div class="wrap wrap--narrow">
+          <h2 class="display display--lg">One integration, three agents</h2>
+          <p class="lede lede--center">
+            You connect once, and <strong>every regulator is downstream of that
+            single integration</strong> — the agents are how it stays that way as
+            more authorities and more origin markets get added.
+          </p>
+          <div class="cta-row cta-row--center">
+            <a class="btn btn--primary btn--lg" href="index.html#license">Booka Demo</a>
+            <a class="btn btn--tonal btn--lg" href="index.html#regulators">See the regulators</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-in">
+        <img
+          class="brand-mark brand-mark--foot"
+          src="assets/brand/booka-light.png"
+          alt="Booka"
+          width="97"
+          height="28"
+        />
+        <p class="foot-note">
+          White-label credentialing and licensing infrastructure.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
