@@ -32,7 +32,8 @@
           />
         </a>
         <nav class="nav-links">
-          <a href="#engine">Engine</a>
+          <a href="plataforma.html">Platform</a>
+          <a href="profesionales.html">For professionals</a>
           <a href="#impact">Impact</a>
           <a href="#regulators">Regulators</a>
           <a href="#security">Security</a>
@@ -265,6 +266,156 @@
               </p>
             </article>
           </div>
+        </div>
+      </section>
+
+      <!-- ══ agents: Verifier / Regulator / Trust ═══════════════ -->
+      <!-- Every marketing page should name an agent and pair the claim
+           with a real number — this section is where the three agents
+           that run the pipeline get introduced by name. -->
+      <section class="s s--a" id="agents">
+        <div class="wrap">
+          <p class="eyebrow">Three agents, one pipeline</p>
+          <h2 class="display">Meet the agents doing the work</h2>
+          <p class="lede">
+            Each stage of a credential's path is run by a named agent, not a
+            black box. <strong>You can point to the step that's running and the
+            agent running it.</strong>
+          </p>
+
+          <div class="agents">
+            <!-- Verifier Agent -->
+            <div class="agent-row">
+              <div class="agent-text">
+                <div class="agent-icon">
+                  <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                </div>
+                <div class="agent-name-row">
+                  <h3>Verifier Agent</h3>
+                  <span class="status status--live">Live</span>
+                </div>
+                <p>
+                  Runs primary-source verification on every document a
+                  candidate submits — checked against the issuing
+                  institution, not just read and filed.
+                </p>
+                <ul class="agent-bullets">
+                  <li>Extracts and cross-checks every field against the source</li>
+                  <li>Flags inconsistencies before a human ever sees the file</li>
+                  <li>Learns your criteria from every file it processes</li>
+                </ul>
+                <p class="agent-stat">
+                  <b class="tabular">94%</b>
+                  <span>first-submission acceptance, against a ~60% industry
+                    standard for manually-prepared files</span>
+                </p>
+              </div>
+              <figure class="plate">
+                <span class="wash" aria-hidden="true"></span>
+                <img
+                  class="shot"
+                  src="assets/shots/hero-verification.jpg"
+                  alt="Verifier Agent workspace: a candidate's uploaded passport and degree under review, with extracted data alongside"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+
+            <!-- Regulator Agent -->
+            <div class="agent-row">
+              <div class="agent-text">
+                <div class="agent-icon">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="8" />
+                    <path d="M12 4v16M4 12h16" />
+                  </svg>
+                </div>
+                <div class="agent-name-row">
+                  <h3>Regulator Agent</h3>
+                  <span class="status status--live">Live</span>
+                </div>
+                <p>
+                  Interfaces directly with the destination licensing
+                  authority — submission, status tracking, and resubmission
+                  if a regulator comes back with a request.
+                </p>
+                <ul class="agent-bullets">
+                  <li>Speaks each regulator's own submission format</li>
+                  <li>Tracks status per authority, not per spreadsheet row</li>
+                  <li>Files nothing until the Verifier Agent has cleared it</li>
+                </ul>
+                <p class="agent-stat">
+                  <b class="tabular">11</b>
+                  <span>regulators live behind this one agent — SCFHS, DHA,
+                    GMC and more, added without a new integration each time</span>
+                </p>
+              </div>
+              <figure class="plate">
+                <span class="wash wash--lav" aria-hidden="true"></span>
+                <div class="regulator-grid" aria-hidden="true">
+                  <img src="assets/regulators/scfhs.png" alt="" />
+                  <img src="assets/regulators/dha.png" alt="" />
+                  <img src="assets/regulators/gmc.png" alt="" />
+                  <img src="assets/regulators/dataflow.png" alt="" />
+                  <img src="assets/regulators/sanidad.png" alt="" />
+                  <img src="assets/regulators/mofa.png" alt="" />
+                </div>
+              </figure>
+            </div>
+
+            <!-- Trust Agent -->
+            <div class="agent-row">
+              <div class="agent-text">
+                <div class="agent-icon">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M7 10V8a5 5 0 0110 0v2" />
+                    <rect x="4.5" y="10" width="15" height="10" rx="2.5" />
+                  </svg>
+                </div>
+                <div class="agent-name-row">
+                  <h3>Trust Agent</h3>
+                  <span class="status status--pilot">Pilot</span>
+                </div>
+                <p>
+                  Manages the compliance layer around getting a verified
+                  professional into place — the part that runs after the
+                  credential clears and before they start work.
+                </p>
+                <ul class="agent-bullets">
+                  <li>Keeps every party's compliance status current, not just the file's</li>
+                  <li>Anchors the cleared credential on an immutable ledger</li>
+                  <li>Runs on the same white-labeled layer as the other two</li>
+                </ul>
+                <p class="agent-stat">
+                  <b>Pilot</b>
+                  <span>running with early customers ahead of general
+                    availability</span>
+                </p>
+              </div>
+              <figure class="plate plate--dark">
+                <div class="gfx gfx--rings" aria-hidden="true">
+                  <span class="ring ring--3"></span>
+                  <span class="ring ring--2"></span>
+                  <span class="ring ring--1"></span>
+                  <svg class="lock" viewBox="0 0 24 24">
+                    <path
+                      d="M7 10V8a5 5 0 0110 0v2"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <rect x="4.5" y="10" width="15" height="10" rx="2.5" />
+                  </svg>
+                  <span class="grain"></span>
+                </div>
+              </figure>
+            </div>
+          </div>
+
+          <p style="margin-top: var(--sp-12)">
+            <a class="btn btn--tonal" href="plataforma.html">See the full platform →</a>
+          </p>
         </div>
       </section>
 
@@ -630,36 +781,121 @@
         </div>
       </section>
 
-      <!-- ══ network stats ══════════════════════════════════════ -->
-      <section class="s s--a">
+      <!-- ══ metrics band (dark, full-bleed, counted-up) ═════════ -->
+      <section class="metrics-band">
         <div class="wrap">
           <h2 class="display">You're not starting a pipeline.</h2>
-          <div class="grid grid--3 grid--stats">
-            <article class="stat">
-              <p class="eyebrow">Already in the network</p>
-              <p class="stat-fig tabular">100,000+</p>
-              <p>
-                Verified professionals. You're plugging into <strong>a pipeline that
-                already exists</strong> rather than building one from zero.
-              </p>
-            </article>
-            <article class="stat">
-              <p class="eyebrow">Origin-agnostic</p>
-              <p class="stat-fig tabular">15+</p>
-              <p>
-                Source countries processed across Latin America, South Asia, and
-                North Africa. The engine <strong>doesn't care where they trained</strong>.
-              </p>
-            </article>
-            <article class="stat">
-              <p class="eyebrow">Zero build time</p>
-              <p class="stat-fig">Weeks</p>
-              <p>
-                Three years and a seven-figure investment to replicate
-                internally. <strong>Weeks to license.</strong>
-              </p>
-            </article>
+          <div class="metrics">
+            <div>
+              <p class="metric-fig tabular" data-count-to="100000" data-suffix="+">0</p>
+              <p class="metric-label">Verified professionals already in the network</p>
+            </div>
+            <div>
+              <p class="metric-fig tabular" data-count-to="15" data-suffix="+">0</p>
+              <p class="metric-label">Source countries processed — the engine doesn't care where they trained</p>
+            </div>
+            <div>
+              <p class="metric-fig" data-static="Weeks">0</p>
+              <p class="metric-label">To license, against three years to build internally</p>
+            </div>
           </div>
+          <p class="metrics-note">
+            Network and coverage figures as of the current build; see
+            <a href="#numbers" style="color: inherit; text-decoration: underline">
+              first-submission acceptance and processing time</a> for the
+            per-file numbers.
+          </p>
+        </div>
+      </section>
+
+      <!-- ══ testimonials ═════════════════════════════════════════ -->
+      <!-- Structurally complete, deliberately unpopulated: a quote with a
+           name and organisation is a claim about a real customer, and this
+           ships with no real quotes on hand yet. Swap in real ones and drop
+           the placeholder note below. -->
+      <section class="s s--a">
+        <div class="wrap">
+          <h2 class="display">What the people running this say</h2>
+          <div class="marquee-wrap">
+            <div class="marquee-track">
+              <article class="t-card">
+                <p class="t-quote">
+                  "Quote placeholder — pending a real customer testimonial."
+                </p>
+                <div class="t-meta">
+                  <div class="t-who">
+                    <span class="t-name">Name, role</span>
+                    <span class="t-org">Organisation</span>
+                  </div>
+                  <span class="t-badge">Stat</span>
+                </div>
+              </article>
+              <article class="t-card">
+                <p class="t-quote">
+                  "Quote placeholder — pending a real customer testimonial."
+                </p>
+                <div class="t-meta">
+                  <div class="t-who">
+                    <span class="t-name">Name, role</span>
+                    <span class="t-org">Organisation</span>
+                  </div>
+                  <span class="t-badge">Stat</span>
+                </div>
+              </article>
+              <article class="t-card">
+                <p class="t-quote">
+                  "Quote placeholder — pending a real customer testimonial."
+                </p>
+                <div class="t-meta">
+                  <div class="t-who">
+                    <span class="t-name">Name, role</span>
+                    <span class="t-org">Organisation</span>
+                  </div>
+                  <span class="t-badge">Stat</span>
+                </div>
+              </article>
+              <!-- duplicated once so the 50%-translate loop has no seam -->
+              <article class="t-card" aria-hidden="true">
+                <p class="t-quote">
+                  "Quote placeholder — pending a real customer testimonial."
+                </p>
+                <div class="t-meta">
+                  <div class="t-who">
+                    <span class="t-name">Name, role</span>
+                    <span class="t-org">Organisation</span>
+                  </div>
+                  <span class="t-badge">Stat</span>
+                </div>
+              </article>
+              <article class="t-card" aria-hidden="true">
+                <p class="t-quote">
+                  "Quote placeholder — pending a real customer testimonial."
+                </p>
+                <div class="t-meta">
+                  <div class="t-who">
+                    <span class="t-name">Name, role</span>
+                    <span class="t-org">Organisation</span>
+                  </div>
+                  <span class="t-badge">Stat</span>
+                </div>
+              </article>
+              <article class="t-card" aria-hidden="true">
+                <p class="t-quote">
+                  "Quote placeholder — pending a real customer testimonial."
+                </p>
+                <div class="t-meta">
+                  <div class="t-who">
+                    <span class="t-name">Name, role</span>
+                    <span class="t-org">Organisation</span>
+                  </div>
+                  <span class="t-badge">Stat</span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <p class="t-placeholder-note">
+            Placeholder cards — swap in real customer quotes before this ships.
+          </p>
         </div>
       </section>
 
@@ -898,6 +1134,52 @@
         new ResizeObserver(() => { resize(); draw(); }).observe(canvas);
         resize();
         io.observe(canvas);
+      })();
+    </script>
+
+    <script>
+      // Count-up for the metrics band. Runs once, when the band scrolls
+      // into view, and settles on the real number under reduced motion
+      // instead of animating past it.
+      (() => {
+        const figs = document.querySelectorAll(".metric-fig[data-count-to]");
+        const statics = document.querySelectorAll(".metric-fig[data-static]");
+        statics.forEach((el) => (el.textContent = el.dataset.static));
+        if (!figs.length) return;
+
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const fmt = (n) => n.toLocaleString("en-US");
+
+        const run = (el) => {
+          const to = Number(el.dataset.countTo);
+          const suffix = el.dataset.suffix || "";
+          if (reduce) {
+            el.textContent = fmt(to) + suffix;
+            return;
+          }
+          const dur = 1400;
+          const t0 = performance.now();
+          const step = (now) => {
+            const p = Math.min(1, (now - t0) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = fmt(Math.round(to * eased)) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        };
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                run(e.target);
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.6 }
+        );
+        figs.forEach((el) => io.observe(el));
       })();
     </script>
   </body>
